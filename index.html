@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="./assets/page-transition.js"></script>
 <style>
   :root{
     --bg:#0b0c0a;
@@ -66,12 +67,37 @@
   .mark{font-family:'Montserrat',serif;font-size:20px;font-weight:400;letter-spacing:.02em}
   nav{display:flex;gap:34px;font-size:14px;color:var(--dim)}
   nav a:hover{color:var(--ink)}
+  .nav-dropdown{position:relative}
+  .nav-category{appearance:none;border:0;background:none;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;padding:0}
+  .nav-category:hover{color:var(--accent)}
+  .nav-category::after{content:"⌄";display:inline-block;margin-left:7px;color:var(--accent);font-size:12px;transition:transform .36s ease}
+  .nav-dropdown.open .nav-category::after{transform:rotate(180deg)}
+  .nav-projects{position:absolute;top:calc(100% + 12px);left:-14px;min-width:206px;padding:0;background:rgba(8,8,8,.98);border:1px solid #303030;border-top:1px solid var(--accent);display:grid;grid-template-rows:0fr;opacity:0;visibility:hidden;transform:translateY(-12px);transform-origin:top;pointer-events:none;box-shadow:0 16px 34px rgba(0,0,0,.55);transition:grid-template-rows .52s cubic-bezier(.2,.75,.25,1),opacity .42s ease,transform .52s cubic-bezier(.2,.75,.25,1),visibility 0s linear .52s}
+  .nav-dropdown.open>.nav-projects{grid-template-rows:1fr;opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto;transition:grid-template-rows .56s cubic-bezier(.2,.75,.25,1),opacity .46s ease,transform .56s cubic-bezier(.2,.75,.25,1),visibility 0s}
+  .nav-project-list{min-height:0;overflow:hidden;display:grid;padding:6px}
+  .nav-projects a{position:relative;display:block;padding:10px 12px 10px 17px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:400;letter-spacing:.015em;text-transform:none;white-space:nowrap;color:var(--dim);transition:color .18s ease,background .18s ease}
+  .nav-projects a::before{content:"";position:absolute;left:7px;top:50%;width:3px;height:3px;background:var(--accent);opacity:0;transform:translateY(-50%);transition:opacity .18s ease}
+  .nav-projects a:hover,.nav-projects a:focus-visible{color:var(--accent);background:rgba(211,31,42,.08);outline:none}
+  .nav-projects a:hover::before,.nav-projects a:focus-visible::before{opacity:1}
   .navtoggle{display:none;background:none;border:1px solid var(--line);color:var(--ink);width:38px;height:38px;font-size:18px}
   @media(max-width:720px){
-    nav{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);flex-direction:column;justify-content:center;align-items:flex-start;padding:0 32px;font-size:22px;gap:22px;display:none;z-index:9}
+    nav{position:fixed;top:0;left:0;right:0;bottom:0;overflow-y:auto;background:var(--bg);flex-direction:column;justify-content:flex-start;align-items:flex-start;padding:calc(86px + var(--safe-t)) 32px calc(28px + var(--safe-b));font-size:22px;gap:22px;display:none;z-index:9}
     nav.open{display:flex}
     .navtoggle{display:block}
+    .nav-dropdown{width:100%}
+    .nav-category::after{font-size:18px}
+    .nav-projects{position:static;min-width:0;margin:10px 0 0 12px;padding:0;border:0;border-left:1px solid var(--line);box-shadow:none;background:transparent;transform:translateY(-6px)}
+    .nav-dropdown.open>.nav-projects{transform:translateY(0)}
+    .nav-project-list{padding:4px 0 4px 10px}
+    .nav-projects a{font-size:11px;padding:9px 8px 9px 14px}
   }
+  @media(prefers-reduced-motion:reduce){.nav-category::after,.nav-projects,.nav-projects a,.nav-projects a::before{transition:none}}
+  .page-transition{position:fixed;inset:0;z-index:1000;pointer-events:none;visibility:hidden;transform:translateX(0)}
+  html.page-enter-project .page-transition{visibility:visible;background:#050505;border-left:12px solid #ff3945;box-shadow:-12px 0 22px rgba(211,31,42,.6);animation:page-wipe-right .9s cubic-bezier(.72,0,.25,1) both}
+  html.page-enter-home .page-transition{visibility:visible;background:#050505;border-right:12px solid #ff3945;box-shadow:12px 0 22px rgba(211,31,42,.6);animation:page-wipe-left .9s cubic-bezier(.72,0,.25,1) both}
+  @keyframes page-wipe-right{from{transform:translateX(0)}to{transform:translateX(110%)}}
+  @keyframes page-wipe-left{from{transform:translateX(0)}to{transform:translateX(-110%)}}
+  @media(prefers-reduced-motion:reduce){.page-transition{display:none}}
 
   /* hero */
   .hero{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;position:relative;padding-bottom:90px;padding-top:calc(140px + var(--safe-t))}
@@ -148,6 +174,7 @@
   .tool-icon{position:relative;aspect-ratio:1;display:grid;place-items:center;background:#101010;border:1px solid #303030;transition:border-color .2s ease,background .2s ease,transform .2s ease}
   .tool-icon:hover,.tool-icon:focus-visible{border-color:var(--accent);background:#171717;transform:translateY(-3px);outline:none}
   .tool-icon img,.tool-icon svg{display:block;width:54px;height:54px;max-width:58%;max-height:58%;object-fit:contain}
+  .tool-icon[data-label="GitHub"] img{background:#6e40c9;border-radius:50%;padding:6px}
   .tool-icon .brand-tile{width:56px;height:56px;display:grid;place-items:center;background:#10140c;color:#a8d900;border:1px solid #27351a;font-family:Arial,sans-serif;font-weight:700;font-size:27px;letter-spacing:-.08em}
   .tool-icon .brand-tile.painter{background:#10140c;color:#a8d900}
   .tool-icon .blueprint-icon{width:58px;height:58px;max-width:62%;max-height:62%;fill:none;stroke:#f4f4f2;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
@@ -287,6 +314,8 @@
   .project p.desc{max-width:68ch;margin:0 auto 18px;color:#e1e1df}
   .project .award{margin:0 auto 14px}
   .project .visit{margin:0 auto}
+  .project-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:4px}
+  .project .project-actions .visit{margin:0}
   #vp-self{background-size:cover;background-position:center 16%;background-repeat:no-repeat;background-color:#090909}
   @media(max-width:820px){
     .project{display:flex;flex-direction:column;width:100vw;margin-left:calc(50% - 50vw);contain-intrinsic-size:auto calc(41.667vw + 420px)}
@@ -313,6 +342,7 @@
 </style>
 </head>
 <body>
+<div class="page-transition" aria-hidden="true"></div>
 <div class="vignette"></div>
 <canvas id="cursor-trail" aria-hidden="true"></canvas>
 
@@ -324,9 +354,18 @@
     <button class="navtoggle" id="navBtn" aria-label="Open menu" aria-expanded="false" aria-controls="nav">☰</button>
     <nav id="nav">
       <a href="#about" onclick="closeNav()">About Me</a>
-      <a href="#professional" onclick="closeNav()">Professional</a>
-      <a href="#jams" onclick="closeNav()">Jams</a>
-      <a href="#academic" onclick="closeNav()">Academic</a>
+      <div class="nav-dropdown">
+        <button class="nav-category" type="button" aria-expanded="false">Professional</button>
+        <div class="nav-projects"><div class="nav-project-list"><a href="./project-details/negative-edge.html?transition=project" onclick="closeNav()">Negative Edge</a><a href="./project-details/golem-rumble.html?transition=project" onclick="closeNav()">Golem Rumble</a><a href="./project-details/abyssos.html?transition=project" onclick="closeNav()">A.B.Y.S.S.O.S.</a></div></div>
+      </div>
+      <div class="nav-dropdown">
+        <button class="nav-category" type="button" aria-expanded="false">Jams</button>
+        <div class="nav-projects"><div class="nav-project-list"><a href="./project-details/self.html?transition=project" onclick="closeNav()">SELF</a><a href="./project-details/in-kings-memory.html?transition=project" onclick="closeNav()">In King's Memory</a></div></div>
+      </div>
+      <div class="nav-dropdown">
+        <button class="nav-category" type="button" aria-expanded="false">Academic</button>
+        <div class="nav-projects"><div class="nav-project-list"><a href="./project-details/reminiscence.html?transition=project" onclick="closeNav()">Reminiscence</a><a href="./project-details/cursed-mansion.html?transition=project" onclick="closeNav()">The Cursed Mansion</a></div></div>
+      </div>
       <a href="#tools" onclick="closeNav()">Tools</a>
       <a href="#contact" onclick="closeNav()">Contact</a>
     </nav>
@@ -359,7 +398,7 @@
   <div class="wrap">
     <div class="sec-head"><h2><span class="accent-word">Professional</span> Work</h2><div class="num">3 projects</div></div>
 
-<div class="project">
+<div class="project" id="project-negative-edge">
       <div class="viewport cover" id="vp-negedge"><img class="banner-image" src="./assets/negedge.webp" alt="" loading="lazy" decoding="async"><span class="status">STEAM · DEMO LIVE</span></div>
       <div>
         <h3>Negative Edge</h3>
@@ -370,11 +409,11 @@
           <div><span>Duration</span>1.5 years (8 months on team)</div>
         </div>
         <p class="desc">Built and dressed levels as the team's technical level artist, and pitched the game privately to publishers including Epic Games and Krafton. Now live as a Steam demo.</p>
-        <a class="visit" href="https://store.steampowered.com/app/4825940/Negative_Edge_Demo/" target="_blank">View on Steam</a>
+        <div class="project-actions"><a class="visit process-link" href="./project-details/negative-edge.html?transition=project">View process</a><a class="visit" href="https://store.steampowered.com/app/4825940/Negative_Edge_Demo/" target="_blank">View on Steam</a></div>
       </div>
     </div>
 
-    <div class="project">
+    <div class="project" id="project-golem-rumble">
       <div class="viewport cover" id="vp-golem"><img class="banner-image" src="./assets/golem-rumble.jpg" alt="Golem Rumble arena screenshot" loading="lazy" decoding="async"><span class="status">STEAM</span></div>
       <div>
         <h3>Golem Rumble</h3>
@@ -384,11 +423,11 @@
           <div><span>Duration</span>1 week</div>
         </div>
         <p class="desc">Designed and Built the map following the required style asked by the team. Led the art department and took care of lighting, shaders and textures.</p>
-        <a class="visit" href="https://store.steampowered.com/app/4461610/Golem_Rumble/?beta=0" target="_blank" rel="noopener noreferrer">View on Steam</a>
+        <div class="project-actions"><a class="visit process-link" href="./project-details/golem-rumble.html?transition=project">View process</a><a class="visit" href="https://store.steampowered.com/app/4461610/Golem_Rumble/?beta=0" target="_blank" rel="noopener noreferrer">View on Steam</a></div>
       </div>
     </div>
 
-    <div class="project">
+    <div class="project" id="project-abyssos">
       <div class="viewport cover" id="vp-abyssos"><img class="banner-image" src="./assets/abyssos.webp" alt="" loading="lazy" decoding="async"><span class="status wip">IN PRODUCTION</span></div>
       <div>
         <h3>A.B.Y.S.S.O.S.</h3>
@@ -412,7 +451,7 @@
   <div class="wrap">
     <div class="sec-head"><h2><span class="accent-word">Jams</span></h2><div class="num">2 projects</div></div>
 
-<div class="project">
+<div class="project" id="project-self">
       <div class="viewport cover" id="vp-self"><img class="banner-image" src="./assets/self.webp" alt="" loading="lazy" decoding="async"><span class="status">ITCH.IO</span></div>
       <div>
         <h3>SELF</h3>
@@ -423,11 +462,11 @@
         </div>
         <p class="desc">Built out level art on a short production cycle, prioritizing mood and readability under
         a tight two-week deadline.</p>
-        <a class="visit" href="https://jacedxxm.itch.io/self" target="_blank">View on itch.io</a>
+        <div class="project-actions"><a class="visit process-link" href="./project-details/self.html?transition=project">View process</a><a class="visit" href="https://jacedxxm.itch.io/self" target="_blank">View on itch.io</a></div>
       </div>
     </div>
 
-    <div class="project">
+    <div class="project" id="project-in-kings-memory">
       <div class="viewport cover" id="vp-ikm"><img class="banner-image" src="./assets/ikm.webp" alt="" loading="lazy" decoding="async"><span class="status">ITCH.IO</span></div>
       <div>
         <h3>In King's Memory</h3>
@@ -438,7 +477,7 @@
         </div>
         <p class="desc">My very first project, built in a single game-jam sprint of two days and twelve hours,
         covering level design, VFX, and voice acting.</p>
-        <a class="visit" href="https://zvoyder.itch.io/in-kings-memory" target="_blank">View on itch.io</a>
+        <div class="project-actions"><a class="visit process-link" href="./project-details/in-kings-memory.html?transition=project">View process</a><a class="visit" href="https://zvoyder.itch.io/in-kings-memory" target="_blank">View on itch.io</a></div>
       </div>
     </div>
 
@@ -449,7 +488,7 @@
   <div class="wrap">
     <div class="sec-head"><h2><span class="accent-word">Academic</span> Work</h2><div class="num">2 projects</div></div>
 
-<div class="project">
+<div class="project" id="project-reminiscence">
       <div class="viewport cover" id="vp-remini"><img class="banner-image" src="./assets/remini.webp" alt="" loading="lazy" decoding="async"><span class="status">ITCH.IO</span></div>
       <div>
         <h3>Reminiscence</h3>
@@ -460,11 +499,11 @@
         </div>
         <p class="desc">Led the art department and designed levels and narrative structure, using environmental
         storytelling as the primary way the player understands what happened here.</p>
-        <a class="visit" href="https://eventhorizonschool.itch.io/reminiscence" target="_blank">View on itch.io</a>
+        <div class="project-actions"><a class="visit process-link" href="./project-details/reminiscence.html?transition=project">View process</a><a class="visit" href="https://eventhorizonschool.itch.io/reminiscence" target="_blank">View on itch.io</a></div>
       </div>
     </div>
 
-    <div class="project">
+    <div class="project" id="project-cursed-mansion">
       <div class="viewport cover" id="vp-mansion"><img class="banner-image" src="./assets/mansion.webp" alt="" loading="lazy" decoding="async"><span class="status">THE ROOKIES</span></div>
       <div>
         <h3>The Cursed Mansion</h3>
@@ -476,7 +515,7 @@
         <p class="award">Awarded Best Environment — Skyup Academy Masterclass</p>
         <p class="desc">My first solo environment piece, built during a Masterclass at Skyup Academy. Covers full
         3D art production, technical tool work, and shader authoring.</p>
-        <a class="visit" href="https://www.therookies.co/entries/38180" target="_blank">View on The Rookies</a>
+        <div class="project-actions"><a class="visit" href="https://www.therookies.co/entries/38180" target="_blank">View on The Rookies</a></div>
       </div>
     </div>
 
@@ -492,12 +531,12 @@
     <div class="tools" aria-label="Tools">
       <span class="tool-icon" role="img" aria-label="Unreal Engine 4 and 5" title="Unreal Engine 4 and 5" data-label="Unreal Engine 4 &amp; 5"><img src="https://cdn.simpleicons.org/unrealengine/ffffff" alt=""></span>
       <span class="tool-icon" role="img" aria-label="GitHub" title="GitHub" data-label="GitHub"><img src="https://cdn.simpleicons.org/github/ffffff" alt=""></span>
-      <span class="tool-icon" role="img" aria-label="Krita" title="Krita" data-label="Krita"><img src="https://cdn.simpleicons.org/krita/ffffff" alt=""></span>
+      <span class="tool-icon" role="img" aria-label="Krita" title="Krita" data-label="Krita"><img src="https://cdn.simpleicons.org/krita/3BABFF" alt=""></span>
       <span class="tool-icon" role="img" aria-label="Adobe Photoshop" title="Adobe Photoshop" data-label="Photoshop"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/photoshop/photoshop-original.svg" alt=""></span>
       <span class="tool-icon" role="img" aria-label="Autodesk Maya" title="Autodesk Maya" data-label="Maya"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/maya/maya-original.svg" alt=""></span>
       <span class="tool-icon" role="img" aria-label="Substance 3D Designer" title="Substance 3D Designer" data-label="Substance Designer"><span class="brand-tile">Ds</span></span>
       <span class="tool-icon" role="img" aria-label="Substance 3D Painter" title="Substance 3D Painter" data-label="Substance Painter"><span class="brand-tile painter">Pt</span></span>
-      <span class="tool-icon" role="img" aria-label="Obsidian" title="Obsidian" data-label="Obsidian"><img src="https://cdn.simpleicons.org/obsidian/ffffff" alt=""></span>
+      <span class="tool-icon" role="img" aria-label="Obsidian" title="Obsidian" data-label="Obsidian"><img src="https://cdn.simpleicons.org/obsidian/483699" alt=""></span>
       <span class="tool-icon" role="img" aria-label="Unity" title="Unity" data-label="Unity"><img src="https://cdn.simpleicons.org/unity/ffffff" alt=""></span>
       <span class="tool-icon" role="img" aria-label="Unreal Material Editor for shaders" title="Unreal Material Editor for shaders" data-label="Unreal Material Editor"><svg viewBox="0 0 64 64" class="blueprint-icon" aria-hidden="true"><path d="M8 16h13v12H8zM43 9h13v12H43zM43 43h13v12H43zM21 22h10v27h12M31 15h12M31 15v34"/><circle cx="31" cy="15" r="3" fill="#f4f4f2" stroke="none"/><circle cx="31" cy="49" r="3" fill="#f4f4f2" stroke="none"/></svg></span>
       <span class="tool-icon" role="img" aria-label="Unreal Engine Blueprint for level prototyping" title="Unreal Engine Blueprint for level prototyping" data-label="Blueprint"><svg viewBox="0 0 64 64" class="blueprint-icon" aria-hidden="true"><path d="M8 16h13v12H8zM43 9h13v12H43zM43 43h13v12H43zM21 22h10v27h12M31 15h12M31 15v34"/><circle cx="31" cy="15" r="3" fill="#f4f4f2" stroke="none"/><circle cx="31" cy="49" r="3" fill="#f4f4f2" stroke="none"/></svg></span>
@@ -528,7 +567,22 @@
     btn.setAttribute('aria-expanded',String(open));
   }
   btn.addEventListener('click',()=>setNavOpen(!nav.classList.contains('open')));
-  function closeNav(){setNavOpen(false)}
+  const projectMenus=[...nav.querySelectorAll('.nav-dropdown')];
+  function setProjectMenu(menu,open){
+    menu.classList.toggle('open',open);
+    menu.querySelector('.nav-category').setAttribute('aria-expanded',String(open));
+  }
+  projectMenus.forEach(menu=>menu.querySelector('.nav-category').addEventListener('click',()=>{
+    const shouldOpen=!menu.classList.contains('open');
+    projectMenus.forEach(other=>setProjectMenu(other,other===menu&&shouldOpen));
+  }));
+  document.addEventListener('click',event=>{
+    if(!event.target.closest('.nav-dropdown'))projectMenus.forEach(menu=>setProjectMenu(menu,false));
+  });
+  function closeNav(){
+    setNavOpen(false);
+    projectMenus.forEach(menu=>setProjectMenu(menu,false));
+  }
   document.addEventListener('keydown',event=>{if(event.key==='Escape')closeNav()});
 
   // Pan through each full-height cover image while its fixed banner crosses
