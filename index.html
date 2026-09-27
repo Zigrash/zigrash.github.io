@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&display=swap" rel="stylesheet">
 <script src="./assets/page-transition.js"></script>
 <style>
   :root{
@@ -20,7 +21,7 @@
     --safe-b:env(safe-area-inset-bottom,0px);
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth;scroll-padding-top:calc(70px + var(--safe-t))}
+  html{scroll-behavior:smooth;scroll-padding-top:calc(70px + var(--safe-t));overflow-y:scroll;scrollbar-gutter:stable}
   body{
     background:var(--bg);color:var(--ink);
     font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;
@@ -49,6 +50,12 @@
   #click-pulse{position:fixed;left:0;top:0;z-index:21;width:10px;height:10px;border:1.5px solid rgba(255,70,80,.95);border-radius:50%;opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.5);box-shadow:0 0 8px rgba(211,31,42,.45)}
   #click-pulse.active{animation:cursor-click-pulse .46s ease-out forwards}
   @keyframes cursor-click-pulse{0%{opacity:.9;transform:translate(-50%,-50%) scale(.55)}65%{opacity:.48}100%{opacity:0;transform:translate(-50%,-50%) scale(4.2)}}
+  #trail-toggle{position:fixed;right:calc(24px + env(safe-area-inset-right,0px));bottom:calc(24px + env(safe-area-inset-bottom,0px));z-index:30;padding:10px 14px;border:1px solid var(--line);background:rgba(11,12,10,.94);color:var(--ink);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.35);transition:border-color .2s ease,color .2s ease}
+  #trail-toggle::before{content:"";display:inline-block;width:6px;height:6px;margin-right:9px;border-radius:50%;background:var(--accent);vertical-align:2px}
+  #trail-toggle[aria-pressed="false"]{color:var(--dim)}
+  #trail-toggle[aria-pressed="false"]::before{background:var(--dim)}
+  #trail-toggle:hover,#trail-toggle:focus-visible{border-color:var(--accent);outline:none}
+  #trail-toggle[hidden]{display:none}
   /* corner brackets — viewport framing motif */
   .frame span{position:fixed;width:22px;height:22px;border-color:var(--line);z-index:5;opacity:.8}
   .frame .tl{top:calc(var(--safe-t) + 14px);left:14px;border-top:1px solid;border-left:1px solid}
@@ -65,20 +72,27 @@
   }
   header .wrap{display:flex;justify-content:space-between;align-items:center}
   .mark{font-family:'Montserrat',serif;font-size:20px;font-weight:400;letter-spacing:.02em}
-  nav{display:flex;gap:34px;font-size:14px;color:var(--dim)}
+  nav{display:flex;align-items:center;gap:34px;font-size:14px;color:var(--dim)}
+  nav > a,.nav-category{display:flex;align-items:center;min-height:32px;line-height:1;white-space:nowrap}
   nav a:hover{color:var(--ink)}
-  .nav-dropdown{position:relative}
-  .nav-category{appearance:none;border:0;background:none;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;padding:0}
+  .nav-dropdown{position:relative;display:flex;flex-direction:column;align-items:flex-start}
+  .nav-category{appearance:none;border:0;background:none;color:inherit;font:inherit;line-height:1;letter-spacing:inherit;text-transform:inherit;cursor:pointer;padding:0}
   .nav-category:hover{color:var(--accent)}
   .nav-category::after{content:"⌄";display:inline-block;margin-left:7px;color:var(--accent);font-size:12px;transition:transform .36s ease}
   .nav-dropdown.open .nav-category::after{transform:rotate(180deg)}
-  .nav-projects{position:absolute;top:calc(100% + 12px);left:-14px;min-width:206px;padding:0;background:rgba(8,8,8,.98);border:1px solid #303030;border-top:1px solid var(--accent);display:grid;grid-template-rows:0fr;opacity:0;visibility:hidden;transform:translateY(-12px);transform-origin:top;pointer-events:none;box-shadow:0 16px 34px rgba(0,0,0,.55);transition:grid-template-rows .52s cubic-bezier(.2,.75,.25,1),opacity .42s ease,transform .52s cubic-bezier(.2,.75,.25,1),visibility 0s linear .52s}
+  .nav-projects{position:absolute;top:calc(100% + 12px);left:-14px;min-width:248px;padding:0;background:rgba(8,8,8,.98);border:1px solid #303030;border-top:1px solid var(--accent);display:grid;grid-template-rows:0fr;opacity:0;visibility:hidden;transform:translateY(-12px);transform-origin:top;pointer-events:none;box-shadow:0 16px 34px rgba(0,0,0,.55);transition:grid-template-rows .52s cubic-bezier(.2,.75,.25,1),opacity .42s ease,transform .52s cubic-bezier(.2,.75,.25,1),visibility 0s linear .52s}
   .nav-dropdown.open>.nav-projects{grid-template-rows:1fr;opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto;transition:grid-template-rows .56s cubic-bezier(.2,.75,.25,1),opacity .46s ease,transform .56s cubic-bezier(.2,.75,.25,1),visibility 0s}
-  .nav-project-list{min-height:0;overflow:hidden;display:grid;padding:6px}
+  .nav-project-list{min-height:0;overflow:hidden;display:grid;padding:8px}
   .nav-projects a{position:relative;display:block;padding:10px 12px 10px 17px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:400;letter-spacing:.015em;text-transform:none;white-space:nowrap;color:var(--dim);transition:color .18s ease,background .18s ease}
   .nav-projects a::before{content:"";position:absolute;left:7px;top:50%;width:3px;height:3px;background:var(--accent);opacity:0;transform:translateY(-50%);transition:opacity .18s ease}
   .nav-projects a:hover,.nav-projects a:focus-visible{color:var(--accent);background:rgba(211,31,42,.08);outline:none}
   .nav-projects a:hover::before,.nav-projects a:focus-visible::before{opacity:1}
+  .nav-project-group + .nav-project-group{border-top:1px solid #303030;margin-top:8px;padding-top:8px}
+  .nav-projects .nav-group-link{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-left:2px solid var(--accent);font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
+  .nav-projects .nav-group-link::before{display:none}
+  .nav-group-link span{color:var(--accent);font-size:15px;font-weight:400}
+  .nav-group-items a{padding-left:22px}
+  .nav-group-items a::before{left:12px}
   .navtoggle{display:none;background:none;border:1px solid var(--line);color:var(--ink);width:38px;height:38px;font-size:18px}
   @media(max-width:720px){
     nav{position:fixed;top:0;left:0;right:0;bottom:0;overflow-y:auto;background:var(--bg);flex-direction:column;justify-content:flex-start;align-items:flex-start;padding:calc(86px + var(--safe-t)) 32px calc(28px + var(--safe-b));font-size:22px;gap:22px;display:none;z-index:9}
@@ -90,14 +104,33 @@
     .nav-dropdown.open>.nav-projects{transform:translateY(0)}
     .nav-project-list{padding:4px 0 4px 10px}
     .nav-projects a{font-size:11px;padding:9px 8px 9px 14px}
+    .nav-group-items a{padding-left:22px}
   }
   @media(prefers-reduced-motion:reduce){.nav-category::after,.nav-projects,.nav-projects a,.nav-projects a::before{transition:none}}
-  .page-transition{position:fixed;inset:0;z-index:1000;pointer-events:none;visibility:hidden;transform:translateX(0)}
-  html.page-enter-project .page-transition{visibility:visible;background:#050505;border-left:12px solid #ff3945;box-shadow:-12px 0 22px rgba(211,31,42,.6);animation:page-wipe-right .9s cubic-bezier(.72,0,.25,1) both}
-  html.page-enter-home .page-transition{visibility:visible;background:#050505;border-right:12px solid #ff3945;box-shadow:12px 0 22px rgba(211,31,42,.6);animation:page-wipe-left .9s cubic-bezier(.72,0,.25,1) both}
-  @keyframes page-wipe-right{from{transform:translateX(0)}to{transform:translateX(110%)}}
-  @keyframes page-wipe-left{from{transform:translateX(0)}to{transform:translateX(-110%)}}
-  @media(prefers-reduced-motion:reduce){.page-transition{display:none}}
+  @view-transition{navigation:auto}
+  .page-transition{display:none}
+  .page-preview-shell{position:fixed;top:0;bottom:0;z-index:1001;width:0;overflow:hidden;pointer-events:none}
+  .page-preview-shell-project{left:0;background:#050505}
+  .page-preview-shell-home{right:0;background:#0b0c0a}
+  .page-preview-shell.is-revealing{animation:preview-expand .72s cubic-bezier(.72,0,.25,1) both}
+  .page-preview{position:absolute;top:0;width:100vw;height:100vh;border:0;background:transparent;pointer-events:none}
+  .page-preview-shell-project .page-preview{left:0}
+  .page-preview-shell-home .page-preview{right:0}
+  .page-preview-edge{position:fixed;top:0;bottom:0;z-index:1002;width:12px;background:#ff3945;box-shadow:0 0 22px rgba(211,31,42,.7);pointer-events:none;opacity:0}
+  .page-preview-edge-project{left:0}
+  .page-preview-edge-home{right:0}
+  .page-preview-edge-project.is-revealing{opacity:1;animation:preview-edge-right .72s cubic-bezier(.72,0,.25,1) both}
+  .page-preview-edge-home.is-revealing{opacity:1;animation:preview-edge-left .72s cubic-bezier(.72,0,.25,1) both}
+  @keyframes preview-expand{from{width:0}to{width:100vw}}
+  @keyframes preview-edge-right{from{transform:translateX(-12px)}to{transform:translateX(100vw)}}
+  @keyframes preview-edge-left{from{transform:translateX(12px)}to{transform:translateX(-100vw)}}
+  html.native-page-transition::view-transition-new(root){z-index:1;animation:none}
+  html.native-page-transition::view-transition-old(root){z-index:2}
+  html.native-page-transition.page-enter-project::view-transition-old(root){border-left:12px solid #ff3945;box-shadow:-12px 0 22px rgba(211,31,42,.6);animation:native-old-right .72s cubic-bezier(.72,0,.25,1) both}
+  html.native-page-transition.page-enter-home::view-transition-old(root){border-right:12px solid #ff3945;box-shadow:12px 0 22px rgba(211,31,42,.6);animation:native-old-left .72s cubic-bezier(.72,0,.25,1) both}
+  @keyframes native-old-right{from{transform:translateX(0)}to{transform:translateX(110%)}}
+  @keyframes native-old-left{from{transform:translateX(0)}to{transform:translateX(-110%)}}
+  @media(prefers-reduced-motion:reduce){.page-preview-shell,.page-preview-edge{display:none}}
 
   /* hero */
   .hero{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;position:relative;padding-bottom:90px;padding-top:calc(140px + var(--safe-t))}
@@ -171,6 +204,9 @@
 
   /* tools */
   .tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:16px}
+  .tool-group + .tool-group{margin-top:38px}
+  .tool-group h3{margin:0 0 14px;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+  .tool-group .tools{grid-template-columns:repeat(4,minmax(0,112px))}
   .tool-icon{position:relative;aspect-ratio:1;display:grid;place-items:center;background:#101010;border:1px solid #303030;transition:border-color .2s ease,background .2s ease,transform .2s ease}
   .tool-icon:hover,.tool-icon:focus-visible{border-color:var(--accent);background:#171717;transform:translateY(-3px);outline:none}
   .tool-icon img,.tool-icon svg{display:block;width:54px;height:54px;max-width:58%;max-height:58%;object-fit:contain}
@@ -182,6 +218,7 @@
   .tool-icon::after{content:attr(data-label);position:absolute;left:50%;bottom:calc(100% + 8px);z-index:2;transform:translate(-50%,4px);padding:6px 9px;background:#202020;border:1px solid #444;color:var(--ink);font-family:'IBM Plex Mono',monospace;font-size:10px;line-height:1.2;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s ease,transform .15s ease}
   .tool-icon:hover::after,.tool-icon:focus-visible::after{opacity:1;transform:translate(-50%,0)}
   @media(max-width:520px){.tools{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.tool-icon{aspect-ratio:1}}
+  @media(max-width:520px){.tool-group .tools{grid-template-columns:repeat(2,minmax(0,112px))}}
 
   /* contact */
   .contact{text-align:left}
@@ -245,7 +282,15 @@
   .contact-icon{display:block;width:18px;height:18px;flex:none}
   .rookies-contact-icon{filter:brightness(0) saturate(100%) invert(82%) sepia(45%) saturate(536%) hue-rotate(6deg) brightness(101%) contrast(89%)}
   .contact-links a:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+  .contact .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:clamp(32px,6vw,88px)}
+  .contact h2{max-width:none;margin:0;font-size:clamp(28px,3.6vw,44px)}
+  .contact h2 .contact-line{display:block;white-space:nowrap}
+  .contact-links{display:grid;grid-template-columns:repeat(2,112px);gap:16px}
+  .contact-links a.tool-icon{display:grid;place-items:center;aspect-ratio:1;padding:0;border:1px solid #303030;background:#101010}
+  .contact-links a.tool-icon:hover,.contact-links a.tool-icon:focus-visible{border-color:var(--accent);background:#171717;color:var(--ink)}
   footer{border-top-color:#303030;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+  @media(max-width:920px){.contact .wrap{grid-template-columns:1fr}.contact-links{justify-content:start}}
+  @media(max-width:640px){.contact h2{font-size:clamp(21px,5vw,28px)}.contact h2 .contact-line{white-space:normal}}
   @media(max-width:720px){
     nav{font-size:19px;letter-spacing:.08em}
     .hero h1{font-size:clamp(16px,5vw,58px);max-width:none;white-space:nowrap}
@@ -283,7 +328,7 @@
     background-color:#090909;
   }
 
-  .project .viewport .banner-image{position:absolute;top:0;left:0;z-index:0;display:block;width:100%;height:auto;max-width:none;object-fit:cover;object-position:center;transform:translate3d(0,var(--scroll-shift,0px),0);will-change:transform}
+  .project .viewport .banner-image{position:absolute;inset:0;z-index:0;display:block;width:100%;height:100%;max-width:none;object-fit:contain;object-position:center}
   .project .viewport::before{z-index:1;pointer-events:none}
   .project .viewport .status{z-index:2}
   #vp-self .banner-image{object-position:center}
@@ -339,12 +384,26 @@
 
   /* Keep Abyssos full-width and use the same image-overlay text position as the other project cards. */
   #vp-abyssos{width:100%;aspect-ratio:12/5;background-size:cover;background-position:center;background-repeat:no-repeat;background-color:#0b0c0a}
+
+  /* LR Explorer reveal stays inside the hero and behind its existing copy. */
+  .hero{isolation:isolate}
+  .hero-explorer{position:absolute;top:0;bottom:0;left:50%;width:100vw;transform:translateX(-50%);overflow:hidden;pointer-events:none;z-index:0;background:#060809}
+  .hero-explorer canvas{position:absolute;inset:0;display:block;width:100%;height:100%;z-index:1}
+  .hero-explorer-fallback{position:absolute;left:50%;top:35%;width:min(46vw,52svh,560px);max-width:none;transform:translate(-50%,-50%);filter:invert(1);opacity:0}
+  .hero-explorer.is-error .hero-explorer-fallback{opacity:.85}
+  .hero-explorer.is-ready .hero-explorer-fallback{display:none}
+  .hero-explorer::after{content:"";position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,transparent 54%,rgba(5,5,5,.18) 64%,#050505 90%)}
+  .hero > h1,.hero > p,.hero > .scroll{position:relative;z-index:1;text-shadow:0 2px 20px rgba(0,0,0,.8)}
+  @media(max-width:720px){.hero-explorer-fallback{left:50%;top:34%;width:min(60vw,40svh)}}
 </style>
+<link rel="stylesheet" href="./assets/kojima-experiment.css">
+<noscript><style>.hero-explorer-fallback{opacity:.85}</style></noscript>
 </head>
 <body>
 <div class="page-transition" aria-hidden="true"></div>
 <div class="vignette"></div>
 <canvas id="cursor-trail" aria-hidden="true"></canvas>
+<button id="trail-toggle" type="button" aria-pressed="true" hidden>Trail + drawing: On</button>
 
 <div class="frame"><span class="tl"></span><span class="tr"></span><span class="bl"></span><span class="br"></span></div>
 
@@ -355,16 +414,21 @@
     <nav id="nav">
       <a href="#about" onclick="closeNav()">About Me</a>
       <div class="nav-dropdown">
-        <button class="nav-category" type="button" aria-expanded="false">Professional</button>
-        <div class="nav-projects"><div class="nav-project-list"><a href="./project-details/negative-edge.html?transition=project" onclick="closeNav()">Negative Edge</a><a href="./project-details/golem-rumble.html?transition=project" onclick="closeNav()">Golem Rumble</a><a href="./project-details/abyssos.html?transition=project" onclick="closeNav()">A.B.Y.S.S.O.S.</a></div></div>
-      </div>
-      <div class="nav-dropdown">
-        <button class="nav-category" type="button" aria-expanded="false">Jams</button>
-        <div class="nav-projects"><div class="nav-project-list"><a href="./project-details/self.html?transition=project" onclick="closeNav()">SELF</a><a href="./project-details/in-kings-memory.html?transition=project" onclick="closeNav()">In King's Memory</a></div></div>
-      </div>
-      <div class="nav-dropdown">
-        <button class="nav-category" type="button" aria-expanded="false">Academic</button>
-        <div class="nav-projects"><div class="nav-project-list"><a href="./project-details/reminiscence.html?transition=project" onclick="closeNav()">Reminiscence</a><a href="./project-details/cursed-mansion.html?transition=project" onclick="closeNav()">The Cursed Mansion</a></div></div>
+        <button class="nav-category" type="button" aria-expanded="false" aria-controls="projects-menu">Projects</button>
+        <div class="nav-projects" id="projects-menu"><div class="nav-project-list">
+          <div class="nav-project-group">
+            <a class="nav-group-link" href="#professional" onclick="closeNav()"><span class="nav-group-index" aria-hidden="true">01</span>Professional <span class="nav-group-arrow" aria-hidden="true">↘</span></a>
+            <div class="nav-group-items"><a href="./project-details/negative-edge.html?transition=project" onclick="closeNav()">Negative Edge</a><a href="./project-details/golem-rumble.html?transition=project" onclick="closeNav()">Golem Rumble</a><a href="./project-details/abyssos.html?transition=project" onclick="closeNav()">A.B.Y.S.S.O.S.</a></div>
+          </div>
+          <div class="nav-project-group">
+            <a class="nav-group-link" href="#jams" onclick="closeNav()"><span class="nav-group-index" aria-hidden="true">02</span>Jams <span class="nav-group-arrow" aria-hidden="true">↘</span></a>
+            <div class="nav-group-items"><a href="./project-details/self.html?transition=project" onclick="closeNav()">SELF</a><a href="./project-details/in-kings-memory.html?transition=project" onclick="closeNav()">In King's Memory</a></div>
+          </div>
+          <div class="nav-project-group">
+            <a class="nav-group-link" href="#academic" onclick="closeNav()"><span class="nav-group-index" aria-hidden="true">03</span>Academic <span class="nav-group-arrow" aria-hidden="true">↘</span></a>
+            <div class="nav-group-items"><a href="./project-details/reminiscence.html?transition=project" onclick="closeNav()">Reminiscence</a><a href="./project-details/cursed-mansion.html?transition=project" onclick="closeNav()">The Cursed Mansion</a></div>
+          </div>
+        </div></div>
       </div>
       <a href="#tools" onclick="closeNav()">Tools</a>
       <a href="#contact" onclick="closeNav()">Contact</a>
@@ -373,6 +437,10 @@
 </header>
 
 <section class="hero wrap">
+  <div class="hero-explorer" role="img" aria-label="LR Explorer logo revealed with particles and a light sweep">
+    <img class="hero-explorer-fallback" src="./assets/lorenzo-rocco-lr-explorer.png" alt="">
+    <canvas aria-hidden="true"></canvas>
+  </div>
   <h1>Lorenzo <span class="name-accent">Rocco</span> Portfolio.</h1>
   <p><strong class="role-accent">Technical Level Artist</strong> specializing in horror games: environment art, level construction, and the technical
   problem-solving that holds a scene together, from blockout to final result.</p>
@@ -399,7 +467,7 @@
     <div class="sec-head"><h2><span class="accent-word">Professional</span> Work</h2><div class="num">3 projects</div></div>
 
 <div class="project" id="project-negative-edge">
-      <div class="viewport cover" id="vp-negedge"><img class="banner-image" src="./assets/negedge.webp" alt="" loading="lazy" decoding="async"><span class="status">STEAM · DEMO LIVE</span></div>
+      <div class="viewport cover" id="vp-negedge"><img class="banner-image" src="./assets/negedge-banner.png" alt="" loading="lazy" decoding="async"><span class="status">STEAM · DEMO LIVE</span></div>
       <div>
         <h3>Negative Edge</h3>
 
@@ -414,7 +482,7 @@
     </div>
 
     <div class="project" id="project-golem-rumble">
-      <div class="viewport cover" id="vp-golem"><img class="banner-image" src="./assets/golem-rumble.jpg" alt="Golem Rumble arena screenshot" loading="lazy" decoding="async"><span class="status">STEAM</span></div>
+      <div class="viewport cover" id="vp-golem"><img class="banner-image" src="./assets/golem-rumble-banner.png" alt="Golem Rumble arena screenshot" loading="lazy" decoding="async"><span class="status">STEAM</span></div>
       <div>
         <h3>Golem Rumble</h3>
         <div class="stats">
@@ -452,7 +520,7 @@
     <div class="sec-head"><h2><span class="accent-word">Jams</span></h2><div class="num">2 projects</div></div>
 
 <div class="project" id="project-self">
-      <div class="viewport cover" id="vp-self"><img class="banner-image" src="./assets/self.webp" alt="" loading="lazy" decoding="async"><span class="status">ITCH.IO</span></div>
+      <div class="viewport cover" id="vp-self"><img class="banner-image" src="./assets/self-banner.png" alt="" loading="lazy" decoding="async"><span class="status">ITCH.IO</span></div>
       <div>
         <h3>SELF</h3>
         <div class="stats">
@@ -489,7 +557,7 @@
     <div class="sec-head"><h2><span class="accent-word">Academic</span> Work</h2><div class="num">2 projects</div></div>
 
 <div class="project" id="project-reminiscence">
-      <div class="viewport cover" id="vp-remini"><img class="banner-image" src="./assets/remini.webp" alt="" loading="lazy" decoding="async"><span class="status">ITCH.IO</span></div>
+      <div class="viewport cover" id="vp-remini"><img class="banner-image" src="./assets/remini-banner.png" alt="" loading="lazy" decoding="async"><span class="status">ITCH.IO</span></div>
       <div>
         <h3>Reminiscence</h3>
         <div class="stats">
@@ -528,30 +596,43 @@
 <section id="tools">
   <div class="wrap">
     <div class="sec-head"><h2><span class="accent-word">Tools</span></h2></div>
-    <div class="tools" aria-label="Tools">
-      <span class="tool-icon" role="img" aria-label="Unreal Engine 4 and 5" title="Unreal Engine 4 and 5" data-label="Unreal Engine 4 &amp; 5"><img src="https://cdn.simpleicons.org/unrealengine/ffffff" alt=""></span>
-      <span class="tool-icon" role="img" aria-label="GitHub" title="GitHub" data-label="GitHub"><img src="https://cdn.simpleicons.org/github/ffffff" alt=""></span>
-      <span class="tool-icon" role="img" aria-label="Krita" title="Krita" data-label="Krita"><img src="https://cdn.simpleicons.org/krita/3BABFF" alt=""></span>
-      <span class="tool-icon" role="img" aria-label="Adobe Photoshop" title="Adobe Photoshop" data-label="Photoshop"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/photoshop/photoshop-original.svg" alt=""></span>
-      <span class="tool-icon" role="img" aria-label="Autodesk Maya" title="Autodesk Maya" data-label="Maya"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/maya/maya-original.svg" alt=""></span>
-      <span class="tool-icon" role="img" aria-label="Substance 3D Designer" title="Substance 3D Designer" data-label="Substance Designer"><span class="brand-tile">Ds</span></span>
-      <span class="tool-icon" role="img" aria-label="Substance 3D Painter" title="Substance 3D Painter" data-label="Substance Painter"><span class="brand-tile painter">Pt</span></span>
-      <span class="tool-icon" role="img" aria-label="Obsidian" title="Obsidian" data-label="Obsidian"><img src="https://cdn.simpleicons.org/obsidian/483699" alt=""></span>
-      <span class="tool-icon" role="img" aria-label="Unity" title="Unity" data-label="Unity"><img src="https://cdn.simpleicons.org/unity/ffffff" alt=""></span>
-      <span class="tool-icon" role="img" aria-label="Unreal Material Editor for shaders" title="Unreal Material Editor for shaders" data-label="Unreal Material Editor"><svg viewBox="0 0 64 64" class="blueprint-icon" aria-hidden="true"><path d="M8 16h13v12H8zM43 9h13v12H43zM43 43h13v12H43zM21 22h10v27h12M31 15h12M31 15v34"/><circle cx="31" cy="15" r="3" fill="#f4f4f2" stroke="none"/><circle cx="31" cy="49" r="3" fill="#f4f4f2" stroke="none"/></svg></span>
-      <span class="tool-icon" role="img" aria-label="Unreal Engine Blueprint for level prototyping" title="Unreal Engine Blueprint for level prototyping" data-label="Blueprint"><svg viewBox="0 0 64 64" class="blueprint-icon" aria-hidden="true"><path d="M8 16h13v12H8zM43 9h13v12H43zM43 43h13v12H43zM21 22h10v27h12M31 15h12M31 15v34"/><circle cx="31" cy="15" r="3" fill="#f4f4f2" stroke="none"/><circle cx="31" cy="49" r="3" fill="#f4f4f2" stroke="none"/></svg></span>
+    <div class="tool-group" aria-labelledby="tools-engine">
+      <h3 id="tools-engine">Engine</h3>
+      <div class="tools">
+        <span class="tool-icon" role="img" aria-label="Unreal Engine 4 and 5" title="Unreal Engine 4 and 5" data-label="Unreal Engine 4 &amp; 5"><img src="https://cdn.simpleicons.org/unrealengine/ffffff" alt=""></span>
+        <span class="tool-icon" role="img" aria-label="Unity" title="Unity" data-label="Unity"><img src="https://cdn.simpleicons.org/unity/ffffff" alt=""></span>
+        <span class="tool-icon" role="img" aria-label="Unreal Engine Blueprint for level prototyping" title="Unreal Engine Blueprint for level prototyping" data-label="Blueprint"><svg viewBox="0 0 64 64" class="blueprint-icon" aria-hidden="true"><path d="M8 16h13v12H8zM43 9h13v12H43zM43 43h13v12H43zM21 22h10v27h12M31 15h12M31 15v34"/><circle cx="31" cy="15" r="3" fill="#f4f4f2" stroke="none"/><circle cx="31" cy="49" r="3" fill="#f4f4f2" stroke="none"/></svg></span>
+        <span class="tool-icon" role="img" aria-label="Unreal Material Editor for shaders" title="Unreal Material Editor for shaders" data-label="Material node"><svg viewBox="0 0 64 64" class="blueprint-icon" aria-hidden="true"><path d="M8 16h13v12H8zM43 9h13v12H43zM43 43h13v12H43zM21 22h10v27h12M31 15h12M31 15v34"/><circle cx="31" cy="15" r="3" fill="#f4f4f2" stroke="none"/><circle cx="31" cy="49" r="3" fill="#f4f4f2" stroke="none"/></svg></span>
+      </div>
+    </div>
+    <div class="tool-group" aria-labelledby="tools-art">
+      <h3 id="tools-art">Art</h3>
+      <div class="tools">
+        <span class="tool-icon" role="img" aria-label="Adobe Photoshop" title="Adobe Photoshop" data-label="Photoshop"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/photoshop/photoshop-original.svg" alt=""></span>
+        <span class="tool-icon" role="img" aria-label="Substance 3D Painter" title="Substance 3D Painter" data-label="Substance Painter"><span class="brand-tile painter">Pt</span></span>
+        <span class="tool-icon" role="img" aria-label="Substance 3D Designer" title="Substance 3D Designer" data-label="Substance Designer"><span class="brand-tile">Ds</span></span>
+        <span class="tool-icon" role="img" aria-label="Autodesk Maya" title="Autodesk Maya" data-label="Maya"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/maya/maya-original.svg" alt=""></span>
+      </div>
+    </div>
+    <div class="tool-group" aria-labelledby="tools-planning">
+      <h3 id="tools-planning">Planning</h3>
+      <div class="tools">
+        <span class="tool-icon" role="img" aria-label="GitHub" title="GitHub" data-label="GitHub"><img src="https://cdn.simpleicons.org/github/ffffff" alt=""></span>
+        <span class="tool-icon" role="img" aria-label="Krita" title="Krita" data-label="Krita"><img src="https://cdn.simpleicons.org/krita/3BABFF" alt=""></span>
+        <span class="tool-icon" role="img" aria-label="Obsidian" title="Obsidian" data-label="Obsidian"><img src="https://cdn.simpleicons.org/obsidian/483699" alt=""></span>
+      </div>
     </div>
   </div>
 </section>
 
 <section id="contact" class="contact">
   <div class="wrap">
-    <h2>Here are my <span class="accent-word">Contact</span> infos! Hope we'll get in touch soon!</h2>
+    <h2><span class="contact-line">Here is my <span class="accent-word">contact</span> info!</span><span class="contact-line">Hope we'll get in touch soon!</span></h2>
     <div class="contact-links">
-      <a href="mailto:lorenzorocco1995@gmail.com"><img class="contact-icon" src="https://cdn.simpleicons.org/gmail/EA4335" alt="">Gmail</a>
-      <a href="https://www.linkedin.com/in/lorenzo-rocco-a4366a269/" target="_blank" rel="noopener noreferrer"><svg class="contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="#0A66C2" d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.55V9h3.57v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>LinkedIn</a>
-      <a href="https://itch.io/profile/zigrash" target="_blank" rel="noopener noreferrer"><img class="contact-icon" src="https://cdn.simpleicons.org/itchdotio/FA5C5C" alt="">itch.io</a>
-      <a href="https://www.therookies.co/u/LorenzoRocco" target="_blank" rel="noopener noreferrer"><img class="contact-icon rookies-contact-icon" src="https://www.therookies.co/favicon.ico" alt="">The Rookies</a>
+      <a class="tool-icon" href="mailto:lorenzorocco1995@gmail.com" aria-label="Gmail" title="Gmail" data-label="Gmail"><img class="contact-icon" src="https://cdn.simpleicons.org/gmail/EA4335" alt=""></a>
+      <a class="tool-icon" href="https://www.linkedin.com/in/lorenzo-rocco-a4366a269/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" data-label="LinkedIn"><svg class="contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="#0A66C2" d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.55V9h3.57v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a>
+      <a class="tool-icon" href="https://itch.io/profile/zigrash" target="_blank" rel="noopener noreferrer" aria-label="itch.io" title="itch.io" data-label="itch.io"><img class="contact-icon" src="https://cdn.simpleicons.org/itchdotio/FA5C5C" alt=""></a>
+      <a class="tool-icon" href="https://www.therookies.co/u/LorenzoRocco" target="_blank" rel="noopener noreferrer" aria-label="The Rookies" title="The Rookies" data-label="The Rookies"><img class="contact-icon rookies-contact-icon" src="https://www.therookies.co/favicon.ico" alt=""></a>
     </div>
   </div>
 </section>
@@ -585,60 +666,39 @@
   }
   document.addEventListener('keydown',event=>{if(event.key==='Escape')closeNav()});
 
-  // Pan through each full-height cover image while its fixed banner crosses
-  // the viewport, revealing the complete image from top to bottom.
-  const bannerFrames=[...document.querySelectorAll('.project .viewport')];
-  const visibleBanners=new Set();
-  const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(!reducedMotion&&'IntersectionObserver' in window){
-    const bannerObserver=new IntersectionObserver(entries=>{
-      entries.forEach(entry=>entry.isIntersecting?visibleBanners.add(entry.target):visibleBanners.delete(entry.target));
-      scheduleBannerUpdate();
-    },{rootMargin:'100px 0px'});
-    let bannerUpdatePending=false;
-    function scheduleBannerUpdate(){
-      if(bannerUpdatePending)return;
-      bannerUpdatePending=true;
-      requestAnimationFrame(()=>{
-        bannerUpdatePending=false;
-        const viewportHeight=window.innerHeight||1;
-        const frames=[...visibleBanners].map(frame=>{
-          const rect=frame.getBoundingClientRect();
-          const image=frame.querySelector('.banner-image');
-          if(image&&image.naturalWidth&&image.naturalHeight){
-            const imageHeight=Math.max(rect.height,rect.width*image.naturalHeight/image.naturalWidth);
-            return {frame,image,rect,imageHeight};
-          }
-          return null;
-        }).filter(Boolean);
-        frames.forEach(({frame,image,rect,imageHeight})=>{
-          image.style.height=`${imageHeight}px`;
-          const progress=Math.max(0,Math.min(1,(viewportHeight-rect.top)/(viewportHeight+rect.height)));
-          frame.style.setProperty('--scroll-shift',`${-(imageHeight-rect.height)*progress}px`);
-        });
-      });
-    }
-    bannerFrames.forEach(frame=>{
-      const image=frame.querySelector('.banner-image');
-      if(image)image.addEventListener('load',scheduleBannerUpdate,{once:true});
-      bannerObserver.observe(frame);
-    });
-    window.addEventListener('scroll',scheduleBannerUpdate,{passive:true});
-    window.addEventListener('resize',scheduleBannerUpdate,{passive:true});
-  }
-
   // A short, tapered red trail follows the pointer tip on mouse/trackpad devices.
   const trailCanvas=document.getElementById('cursor-trail');
   const trailMedia=window.matchMedia('(hover: hover) and (pointer: fine)');
   const reduceTrailMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(trailCanvas&&trailMedia.matches&&!reduceTrailMotion){
     const trailContext=trailCanvas.getContext('2d',{alpha:true});
+    const trailToggle=document.getElementById('trail-toggle');
+    let trailEnabled=true;
+    trailToggle.hidden=false;
+    trailToggle.addEventListener('click',()=>{
+      trailEnabled=!trailEnabled;
+      trailToggle.setAttribute('aria-pressed',String(trailEnabled));
+      trailToggle.textContent=`Trail + drawing: ${trailEnabled?'On':'Off'}`;
+      if(!trailEnabled){
+        trailPoints.length=0;
+        completedStrokes.length=0;
+        drawingActive=false;
+        selectingText=false;
+        pointerDownActive=false;
+        textSelectionAllowed=false;
+        if(trailFrame){cancelAnimationFrame(trailFrame);trailFrame=0}
+        if(trailFadeTimer){clearTimeout(trailFadeTimer);trailFadeTimer=0}
+        trailContext.clearRect(0,0,window.innerWidth,window.innerHeight);
+        previousBounds=null;
+        clickPulse.classList.remove('active');
+      }
+    });
     const clickPulse=document.createElement('span');
     clickPulse.id='click-pulse';
     clickPulse.setAttribute('aria-hidden','true');
     document.body.append(clickPulse);
     document.addEventListener('pointerdown',event=>{
-      if(event.pointerType!=='mouse'||event.button!==0)return;
+      if(!trailEnabled||event.pointerType!=='mouse'||event.button!==0)return;
       clickPulse.style.left=`${event.clientX}px`;
       clickPulse.style.top=`${event.clientY}px`;
       clickPulse.classList.remove('active');
@@ -648,14 +708,14 @@
     const trailPoints=[];
     const completedStrokes=[];
     let trailFrame=0;
+    let trailFadeTimer=0;
     let previousBounds=null;
     let drawingActive=false;
     let selectingText=false;
     let pointerDownActive=false;
     let textSelectionAllowed=false;
-    const strokeEraseDuration=3000;
-    const strokeFadeDuration=650;
-    const strokeChunkSize=12;
+    const strokeHoldDuration=10000;
+    const strokeFadeDuration=1200;
     const trailLifetime=420;
     function resizeTrailCanvas(){
       const ratio=Math.min(window.devicePixelRatio||1,1.5);
@@ -668,7 +728,20 @@
       requestTrailFrame();
     }
     function requestTrailFrame(){
-      if(!trailFrame)trailFrame=requestAnimationFrame(drawTrail);
+      if(trailEnabled&&!trailFrame)trailFrame=requestAnimationFrame(drawTrail);
+    }
+    function scheduleTrailFade(){
+      if(trailFadeTimer)clearTimeout(trailFadeTimer);
+      trailFadeTimer=0;
+      const now=performance.now();
+      let nextFade=Infinity;
+      completedStrokes.forEach(stroke=>{
+        const startsAt=stroke.releasedAt+strokeHoldDuration;
+        if(startsAt>now)nextFade=Math.min(nextFade,startsAt);
+      });
+      if(Number.isFinite(nextFade)){
+        trailFadeTimer=setTimeout(()=>{trailFadeTimer=0;requestTrailFrame()},Math.max(1,nextFade-now));
+      }
     }
     function includeTrailBounds(left,top,right,bottom){
       const padding=18;
@@ -703,25 +776,13 @@
     }
     function completeStroke(points,releasedAt){
       const {leftSide,rightSide}=strokeSides(points);
-      const chunks=[];
-      for(let start=0;start<points.length-1;){
-        const end=Math.min(start+strokeChunkSize,points.length-1);
-        let left=Infinity,top=Infinity,right=-Infinity,bottom=-Infinity;
-        for(let i=start;i<=end;i++){
-          left=Math.min(left,points[i].x);
-          top=Math.min(top,points[i].y);
-          right=Math.max(right,points[i].x);
-          bottom=Math.max(bottom,points[i].y);
-        }
-        chunks.push({path:strokePath(leftSide,rightSide,start,end),left,top,right,bottom});
-        start=end;
-      }
-      const fadeSpan=strokeEraseDuration-strokeFadeDuration;
-      chunks.forEach((chunk,index)=>{
-        chunk.fadeStart=releasedAt+fadeSpan*(chunks.length===1?1:index/(chunks.length-1));
-        chunk.fadeEnd=chunk.fadeStart+strokeFadeDuration;
+      let left=Infinity,top=Infinity,right=-Infinity,bottom=-Infinity;
+      points.forEach(point=>{
+        left=Math.min(left,point.x);top=Math.min(top,point.y);
+        right=Math.max(right,point.x);bottom=Math.max(bottom,point.y);
       });
-      completedStrokes.push({chunks,firstVisible:0});
+      completedStrokes.push({path:strokePath(leftSide,rightSide,0,points.length-1),left,top,right,bottom,releasedAt});
+      scheduleTrailFade();
     }
     function drawTrail(now){
       trailFrame=0;
@@ -730,17 +791,16 @@
         previousBounds=null;
       }
       trailContext.fillStyle='#e21e2b';
+      let fadingStrokes=false;
       for(let i=completedStrokes.length-1;i>=0;i--){
         const stroke=completedStrokes[i];
-        while(stroke.firstVisible<stroke.chunks.length&&now>=stroke.chunks[stroke.firstVisible].fadeEnd)stroke.firstVisible++;
-        if(stroke.firstVisible===stroke.chunks.length){completedStrokes.splice(i,1);continue}
-        for(let j=stroke.firstVisible;j<stroke.chunks.length;j++){
-          const chunk=stroke.chunks[j];
-          const opacity=now<=chunk.fadeStart?1:(chunk.fadeEnd-now)/strokeFadeDuration;
-          trailContext.globalAlpha=.78*opacity;
-          trailContext.fill(chunk.path);
-          includeTrailBounds(chunk.left,chunk.top,chunk.right,chunk.bottom);
-        }
+        const elapsed=now-stroke.releasedAt;
+        if(elapsed>=strokeHoldDuration+strokeFadeDuration){completedStrokes.splice(i,1);continue}
+        if(elapsed>=strokeHoldDuration)fadingStrokes=true;
+        const opacity=elapsed<=strokeHoldDuration?1:1-(elapsed-strokeHoldDuration)/strokeFadeDuration;
+        trailContext.globalAlpha=.78*opacity;
+        trailContext.fill(stroke.path);
+        includeTrailBounds(stroke.left,stroke.top,stroke.right,stroke.bottom);
       }
       trailContext.globalAlpha=1;
       while(!drawingActive&&trailPoints.length&&now-trailPoints[0].time>trailLifetime)trailPoints.shift();
@@ -761,7 +821,8 @@
         const fade=drawingActive?1:Math.max(0,1-(now-trailPoints[trailPoints.length-1].time)/trailLifetime);
         paintStroke(trailPoints,fade);
       }
-      if(completedStrokes.length||!drawingActive&&trailPoints.length>1)requestTrailFrame();
+      if(!trailFadeTimer&&completedStrokes.length)scheduleTrailFade();
+      if(fadingStrokes||!drawingActive&&trailPoints.length>1)requestTrailFrame();
     }
     function isTextUnderPointer(x,y){
       let node=null,offset=0;
@@ -785,7 +846,7 @@
       return false;
     }
     document.addEventListener('pointerdown',event=>{
-      if(event.pointerType!=='mouse'||event.button!==0)return;
+      if(!trailEnabled||event.pointerType!=='mouse'||event.button!==0)return;
       pointerDownActive=true;
       textSelectionAllowed=isTextUnderPointer(event.clientX,event.clientY);
       trailPoints.length=0;
@@ -824,7 +885,7 @@
     document.addEventListener('pointercancel',finishDrawing,{passive:true});
     window.addEventListener('blur',()=>finishDrawing(),{passive:true});
     document.addEventListener('pointermove',event=>{
-      if(event.pointerType!=='mouse'||selectingText)return;
+      if(!trailEnabled||event.pointerType!=='mouse'||selectingText)return;
       const last=trailPoints[trailPoints.length-1];
       if(!last||Math.hypot(event.clientX-last.x,event.clientY-last.y)>1.5){
         trailPoints.push({x:event.clientX,y:event.clientY,time:performance.now()});
@@ -837,5 +898,6 @@
     resizeTrailCanvas();
   }
 </script>
+<script src="./assets/hero-explorer.js" defer></script>
 </body>
 </html>
