@@ -10,9 +10,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&display=swap" rel="stylesheet">
 <script src="../assets/page-transition.js"></script>
 <link rel="stylesheet" href="./project-page.css">
+<script src="../assets/project-pointer.js" defer></script>
 </head>
 <body>
 <div class="page-transition" aria-hidden="true"></div>
+<canvas id="cursor-trail" aria-hidden="true"></canvas>
+<button id="trail-toggle" type="button" aria-pressed="true" hidden>Trail + drawing: On</button>
 <header class="topbar"><a class="back" href="../index.html?transition=home#professional">← Home Page</a><span class="brand">Lorenzo Rocco</span></header>
 <main>
   <section class="project-hero">
