@@ -646,14 +646,16 @@
       clickPulse.classList.add('active');
     },{passive:true});
     const trailPoints=[];
+    const completedStrokes=[];
     let trailFrame=0;
     let previousBounds=null;
     let drawingActive=false;
     let selectingText=false;
     let pointerDownActive=false;
     let textSelectionAllowed=false;
-    let releasedDrawing=false;
     const strokeEraseDuration=3000;
+    const strokeFadeDuration=650;
+    const strokeChunkSize=12;
     const trailLifetime=420;
     function resizeTrailCanvas(){
       const ratio=Math.min(window.devicePixelRatio||1,1.5);
@@ -668,46 +670,98 @@
     function requestTrailFrame(){
       if(!trailFrame)trailFrame=requestAnimationFrame(drawTrail);
     }
+    function includeTrailBounds(left,top,right,bottom){
+      const padding=18;
+      if(previousBounds){
+        const minX=Math.min(previousBounds.left,left-padding),minY=Math.min(previousBounds.top,top-padding);
+        const maxX=Math.max(previousBounds.left+previousBounds.width,right+padding);
+        const maxY=Math.max(previousBounds.top+previousBounds.height,bottom+padding);
+        previousBounds={left:minX,top:minY,width:maxX-minX,height:maxY-minY};
+      }else previousBounds={left:left-padding,top:top-padding,width:right-left+padding*2,height:bottom-top+padding*2};
+    }
+    function strokeSides(points){
+      const leftSide=[],rightSide=[];
+      points.forEach((point,index)=>{
+        const before=points[Math.max(0,index-1)],after=points[Math.min(points.length-1,index+1)];
+        const dx=after.x-before.x,dy=after.y-before.y;
+        const length=Math.hypot(dx,dy)||1;
+        const nx=-dy/length,ny=dx/length;
+        const progress=index/(points.length-1);
+        const width=(.2+3.3*Math.pow(progress,.72))/2;
+        leftSide.push([point.x+nx*width,point.y+ny*width]);
+        rightSide.push([point.x-nx*width,point.y-ny*width]);
+      });
+      return {leftSide,rightSide};
+    }
+    function strokePath(leftSide,rightSide,start,end){
+      const path=new Path2D();
+      path.moveTo(leftSide[start][0],leftSide[start][1]);
+      for(let i=start+1;i<=end;i++)path.lineTo(leftSide[i][0],leftSide[i][1]);
+      for(let i=end;i>=start;i--)path.lineTo(rightSide[i][0],rightSide[i][1]);
+      path.closePath();
+      return path;
+    }
+    function completeStroke(points,releasedAt){
+      const {leftSide,rightSide}=strokeSides(points);
+      const chunks=[];
+      for(let start=0;start<points.length-1;){
+        const end=Math.min(start+strokeChunkSize,points.length-1);
+        let left=Infinity,top=Infinity,right=-Infinity,bottom=-Infinity;
+        for(let i=start;i<=end;i++){
+          left=Math.min(left,points[i].x);
+          top=Math.min(top,points[i].y);
+          right=Math.max(right,points[i].x);
+          bottom=Math.max(bottom,points[i].y);
+        }
+        chunks.push({path:strokePath(leftSide,rightSide,start,end),left,top,right,bottom});
+        start=end;
+      }
+      const fadeSpan=strokeEraseDuration-strokeFadeDuration;
+      chunks.forEach((chunk,index)=>{
+        chunk.fadeStart=releasedAt+fadeSpan*(chunks.length===1?1:index/(chunks.length-1));
+        chunk.fadeEnd=chunk.fadeStart+strokeFadeDuration;
+      });
+      completedStrokes.push({chunks,firstVisible:0});
+    }
     function drawTrail(now){
       trailFrame=0;
       if(previousBounds){
         trailContext.clearRect(previousBounds.left,previousBounds.top,previousBounds.width,previousBounds.height);
         previousBounds=null;
       }
-      while(trailPoints.length&&(releasedDrawing?now>=trailPoints[0].eraseAt:!drawingActive&&now-trailPoints[0].time>trailLifetime))trailPoints.shift();
-      if(releasedDrawing&&!trailPoints.length)releasedDrawing=false;
-      if(trailPoints.length>1){
-        const points=trailPoints;
+      trailContext.fillStyle='#e21e2b';
+      for(let i=completedStrokes.length-1;i>=0;i--){
+        const stroke=completedStrokes[i];
+        while(stroke.firstVisible<stroke.chunks.length&&now>=stroke.chunks[stroke.firstVisible].fadeEnd)stroke.firstVisible++;
+        if(stroke.firstVisible===stroke.chunks.length){completedStrokes.splice(i,1);continue}
+        for(let j=stroke.firstVisible;j<stroke.chunks.length;j++){
+          const chunk=stroke.chunks[j];
+          const opacity=now<=chunk.fadeStart?1:(chunk.fadeEnd-now)/strokeFadeDuration;
+          trailContext.globalAlpha=.78*opacity;
+          trailContext.fill(chunk.path);
+          includeTrailBounds(chunk.left,chunk.top,chunk.right,chunk.bottom);
+        }
+      }
+      trailContext.globalAlpha=1;
+      while(!drawingActive&&trailPoints.length&&now-trailPoints[0].time>trailLifetime)trailPoints.shift();
+      function paintStroke(points,fade){
+        if(points.length<2)return;
         let left=Infinity,top=Infinity,right=-Infinity,bottom=-Infinity;
         points.forEach(point=>{left=Math.min(left,point.x);top=Math.min(top,point.y);right=Math.max(right,point.x);bottom=Math.max(bottom,point.y)});
-        const padding=18;
-        previousBounds={left:left-padding,top:top-padding,width:right-left+padding*2,height:bottom-top+padding*2};
-        const fade=drawingActive||releasedDrawing?1:Math.max(0,1-(now-points[points.length-1].time)/trailLifetime);
-        const leftSide=[],rightSide=[];
-        points.forEach((point,index)=>{
-          const before=points[Math.max(0,index-1)],after=points[Math.min(points.length-1,index+1)];
-          let dx=after.x-before.x,dy=after.y-before.y;
-          const length=Math.hypot(dx,dy)||1;
-          const nx=-dy/length,ny=dx/length;
-          const progress=index/(points.length-1);
-          const width=(.2+3.3*Math.pow(progress,.72))/2;
-          leftSide.push([point.x+nx*width,point.y+ny*width]);
-          rightSide.push([point.x-nx*width,point.y-ny*width]);
-        });
-        trailContext.beginPath();
-        trailContext.moveTo(leftSide[0][0],leftSide[0][1]);
-        leftSide.slice(1).forEach(point=>trailContext.lineTo(point[0],point[1]));
-        for(let i=rightSide.length-1;i>=0;i--)trailContext.lineTo(rightSide[i][0],rightSide[i][1]);
-        trailContext.closePath();
+        includeTrailBounds(left,top,right,bottom);
+        const {leftSide,rightSide}=strokeSides(points);
         trailContext.globalAlpha=fade*.78;
-        trailContext.fillStyle='#e21e2b';
         trailContext.shadowColor='rgba(226,30,43,.72)';
         trailContext.shadowBlur=4;
-        trailContext.fill();
+        trailContext.fill(strokePath(leftSide,rightSide,0,points.length-1));
         trailContext.shadowBlur=0;
         trailContext.globalAlpha=1;
       }
-      if(!drawingActive&&(releasedDrawing?trailPoints.length>0:trailPoints.length>1))requestTrailFrame();
+      if(trailPoints.length>1){
+        const fade=drawingActive?1:Math.max(0,1-(now-trailPoints[trailPoints.length-1].time)/trailLifetime);
+        paintStroke(trailPoints,fade);
+      }
+      if(completedStrokes.length||!drawingActive&&trailPoints.length>1)requestTrailFrame();
     }
     function isTextUnderPointer(x,y){
       let node=null,offset=0;
@@ -737,7 +791,6 @@
       trailPoints.length=0;
       drawingActive=true;
       selectingText=false;
-      releasedDrawing=false;
       trailPoints.push({x:event.clientX,y:event.clientY,time:performance.now()});
       requestTrailFrame();
     },{passive:true});
@@ -745,7 +798,6 @@
       if(!drawingActive)return;
       selectingText=true;
       drawingActive=false;
-      releasedDrawing=false;
       trailPoints.length=0;
       requestTrailFrame();
     }
@@ -758,11 +810,9 @@
       if(event&&event.pointerType&&event.pointerType!=='mouse')return;
       if(drawingActive){
         drawingActive=false;
-        releasedDrawing=trailPoints.length>1;
-        if(releasedDrawing){
+        if(trailPoints.length>1){
           const releasedAt=performance.now();
-          const pointCount=Math.max(1,trailPoints.length);
-          trailPoints.forEach((point,index)=>{point.eraseAt=releasedAt+strokeEraseDuration*((index+1)/pointCount)});
+          completeStroke(trailPoints.splice(0),releasedAt);
           requestTrailFrame();
         }else trailPoints.length=0;
       }
@@ -775,7 +825,6 @@
     window.addEventListener('blur',()=>finishDrawing(),{passive:true});
     document.addEventListener('pointermove',event=>{
       if(event.pointerType!=='mouse'||selectingText)return;
-      if(releasedDrawing){requestTrailFrame();return}
       const last=trailPoints[trailPoints.length-1];
       if(!last||Math.hypot(event.clientX-last.x,event.clientY-last.y)>1.5){
         trailPoints.push({x:event.clientX,y:event.clientY,time:performance.now()});
