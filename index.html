@@ -179,6 +179,8 @@
   .frame span{border-color:#333;opacity:.65}
   header{background:linear-gradient(to bottom,rgba(5,5,5,.97),rgba(5,5,5,0))}
   .mark{font-family:'Montserrat',sans-serif;font-size:15px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+  strong,b{color:var(--accent)}
+  .accent-word{color:var(--accent)}
   nav{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
   nav a{transition:color .2s ease}
   nav a:hover{color:var(--accent)}
@@ -196,7 +198,7 @@
   .sec-head h2{font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(34px,5vw,60px);line-height:1;letter-spacing:-.04em;text-transform:uppercase}
   .sec-head .num{color:var(--accent);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
   .about-grid p{color:#b9b9b7}
-  .about-grid p strong{color:var(--ink);font-weight:700}
+  .about-grid p strong{color:var(--accent);font-weight:700}
   .about-grid p strong.role-accent{color:var(--accent)}
   .project{border-top-color:#333}
   .viewport{border-color:#343434;background-color:#0c0c0c}
@@ -318,7 +320,7 @@
 
 <header>
   <div class="wrap">
-    <div class="mark">Lorenzo Rocco</div>
+    <div class="mark"><span class="accent-word">Lorenzo Rocco</span></div>
     <button class="navtoggle" id="navBtn" aria-label="Open menu" aria-expanded="false" aria-controls="nav">☰</button>
     <nav id="nav">
       <a href="#about" onclick="closeNav()">About Me</a>
@@ -341,13 +343,13 @@
 <section id="about">
   <div class="wrap about-grid">
     <div class="about-copy">
-      <div class="sec-head" style="margin-bottom:26px"><h2>About Me</h2></div>
+      <div class="sec-head" style="margin-bottom:26px"><h2>About <span class="accent-word">Me</span></h2></div>
       <p>I'm your <strong>Technical Level Artist!</strong> working toward horror as a specialty. I'd like to build amazing levels that will leave the player amazed and make them remember the experience.</p>
       <p>My strongest ground is <strong>Environment Art</strong>: dressing, modularity, material and texture work
       that reads as a real, inhabited (or once-inhabited) space. I pair that with <strong>Level Design</strong>,
       focusing on pacing, readability, and encounter and exploration flow. I'm developing my <strong>Lighting</strong> and
       <strong>Shader/Technical Art</strong> skills to communicate visual intent clearly and help the team bring a scene's mood to life.</p>
-      <p>I've pitched a project to publishers in private settings during DevGamm 2025 in Lisbon, gained experience leading artists, and trained myself to think quickly and efficiently during short game jams. What stays constant is my care for the aesthetic side of a level: how it's built, how it performs, and how it delivers the best possible experience for our players.</p>
+      <p>I've pitched a project to publishers in private settings during <span class="accent-word">DevGamm 2025 in Lisbon</span>, gained experience leading artists, and trained myself to think quickly and efficiently during short game jams. What stays constant is my care for the aesthetic side of a level: how it's built, how it performs, and how it delivers the <span class="accent-word">best possible experience</span> for our players.</p>
     </div>
     <figure class="about-photo"><img src="./assets/about-event.webp" alt="Developers collaborating at computers during a game development event" loading="lazy" decoding="async"></figure>
   </div>
@@ -355,7 +357,7 @@
 
 <section id="professional">
   <div class="wrap">
-    <div class="sec-head"><h2>Professional Work</h2><div class="num">2 projects</div></div>
+    <div class="sec-head"><h2><span class="accent-word">Professional</span> Work</h2><div class="num">2 projects</div></div>
 
 <div class="project">
       <div class="viewport cover" id="vp-negedge"><img class="banner-image" src="./assets/negedge.webp" alt="" loading="lazy" decoding="async"><span class="status">STEAM · DEMO LIVE</span></div>
@@ -394,7 +396,7 @@
 
 <section id="jams">
   <div class="wrap">
-    <div class="sec-head"><h2>Jams</h2><div class="num">2 projects</div></div>
+    <div class="sec-head"><h2><span class="accent-word">Jams</span></h2><div class="num">2 projects</div></div>
 
 <div class="project">
       <div class="viewport cover" id="vp-self"><img class="banner-image" src="./assets/self.webp" alt="" loading="lazy" decoding="async"><span class="status">ITCH.IO</span></div>
@@ -431,7 +433,7 @@
 
 <section id="academic">
   <div class="wrap">
-    <div class="sec-head"><h2>Academic Work</h2><div class="num">2 projects</div></div>
+    <div class="sec-head"><h2><span class="accent-word">Academic</span> Work</h2><div class="num">2 projects</div></div>
 
 <div class="project">
       <div class="viewport cover" id="vp-remini"><img class="banner-image" src="./assets/remini.webp" alt="" loading="lazy" decoding="async"><span class="status">ITCH.IO</span></div>
@@ -472,7 +474,7 @@
 
 <section id="tools">
   <div class="wrap">
-    <div class="sec-head"><h2>Tools</h2></div>
+    <div class="sec-head"><h2><span class="accent-word">Tools</span></h2></div>
     <div class="tools" aria-label="Tools">
       <span class="tool-icon" role="img" aria-label="Unreal Engine 4 and 5" title="Unreal Engine 4 and 5" data-label="Unreal Engine 4 &amp; 5"><img src="https://cdn.simpleicons.org/unrealengine/ffffff" alt=""></span>
       <span class="tool-icon" role="img" aria-label="GitHub" title="GitHub" data-label="GitHub"><img src="https://cdn.simpleicons.org/github/ffffff" alt=""></span>
@@ -491,7 +493,7 @@
 
 <section id="contact" class="contact">
   <div class="wrap">
-    <h2>Here are my contact infos! Hope we'll get in touch soon!</h2>
+    <h2>Here are my <span class="accent-word">Contact</span> infos! Hope we'll get in touch soon!</h2>
     <div class="contact-links">
       <a href="mailto:lorenzorocco1995@gmail.com"><img class="contact-icon" src="https://cdn.simpleicons.org/gmail/EA4335" alt="">Gmail</a>
       <a href="https://www.linkedin.com/in/lorenzo-rocco-a4366a269/" target="_blank" rel="noopener noreferrer"><svg class="contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="#0A66C2" d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.55V9h3.57v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>LinkedIn</a>
@@ -501,10 +503,7 @@
   </div>
 </section>
 
-<footer class="wrap">
-  <div>© 2026 — Lorenzo Rocco</div>
-  <div>Technical Level Artist · Horror Environments</div>
-</footer>
+
 
 <script>
   const btn=document.getElementById('navBtn'), nav=document.getElementById('nav');
