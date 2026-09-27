@@ -20,6 +20,22 @@
     const previousRestoration = window.history.scrollRestoration;
     window.history.scrollRestoration = 'manual';
     let restoreActive = true;
+    const scrollKeys = new Set(['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' ']);
+    function stopRestoring() {
+      if (!restoreActive) return;
+      restoreActive = false;
+      window.removeEventListener('wheel', stopRestoring);
+      window.removeEventListener('touchstart', stopRestoring);
+      window.removeEventListener('pointerdown', stopRestoring);
+      window.removeEventListener('keydown', onScrollKey);
+    }
+    function onScrollKey(event) {
+      if (scrollKeys.has(event.key)) stopRestoring();
+    }
+    window.addEventListener('wheel', stopRestoring, { passive: true, once: true });
+    window.addEventListener('touchstart', stopRestoring, { passive: true, once: true });
+    window.addEventListener('pointerdown', stopRestoring, { once: true });
+    window.addEventListener('keydown', onScrollKey);
     const restorePosition = () => {
       if (!restoreActive) return;
       const anchor = resumeAnchor && Number.isFinite(resumeTop)
@@ -35,18 +51,16 @@
     };
     document.addEventListener('DOMContentLoaded', () => {
       restorePosition();
-      requestAnimationFrame(restorePosition);
+      requestAnimationFrame(() => {
+        restorePosition();
+        stopRestoring();
+      });
     }, { once: true });
-    window.addEventListener('load', restorePosition, { once: true });
-    window.addEventListener('pageshow', restorePosition, { once: true });
-    if (document.fonts) document.fonts.ready.then(restorePosition);
-    window.setTimeout(() => {
-      restorePosition();
-      restoreActive = false;
+    window.addEventListener('pageshow', () => {
       if (previousRestoration === 'auto' || previousRestoration === 'manual') {
         window.history.scrollRestoration = previousRestoration;
       }
-    }, 1200);
+    }, { once: true });
   }
 
   if (direction === 'project' || direction === 'home') {
