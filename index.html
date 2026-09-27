@@ -246,7 +246,7 @@
     background-color:#090909;
   }
 
-  .project .viewport .banner-image{position:absolute;top:0;left:0;z-index:0;display:block;width:100%;height:auto;max-width:none;object-fit:cover;object-position:center;transform:translate3d(0,var(--scroll-shift,0px),0);will-change:transform}
+  .project .viewport .banner-image{position:absolute;top:0;left:0;z-index:0;display:block;width:100%;height:auto;max-width:none;object-fit:cover;object-position:center}
   .project .viewport::before{z-index:1;pointer-events:none}
   .project .viewport .status{z-index:2}
   #vp-self .banner-image{object-position:center}
@@ -508,16 +508,12 @@
   function closeNav(){setNavOpen(false)}
   document.addEventListener('keydown',event=>{if(event.key==='Escape')closeNav()});
 
-  // Pan through each full-height cover image while its fixed banner crosses
-  // the viewport, revealing the complete image from top to bottom.
+  // Pan through the cover as it crosses the viewport. Keep layout sizing out of
+  // the scroll loop and promote only banners currently near the viewport.
   const bannerFrames=[...document.querySelectorAll('.project .viewport')];
   const visibleBanners=new Set();
   const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(!reducedMotion&&'IntersectionObserver' in window){
-    const bannerObserver=new IntersectionObserver(entries=>{
-      entries.forEach(entry=>entry.isIntersecting?visibleBanners.add(entry.target):visibleBanners.delete(entry.target));
-      scheduleBannerUpdate();
-    },{rootMargin:'100px 0px'});
     let bannerUpdatePending=false;
     function scheduleBannerUpdate(){
       if(bannerUpdatePending)return;
@@ -528,19 +524,33 @@
         const frames=[...visibleBanners].map(frame=>{
           const rect=frame.getBoundingClientRect();
           const image=frame.querySelector('.banner-image');
-          if(image&&image.naturalWidth&&image.naturalHeight){
-            const imageHeight=Math.max(rect.height,rect.width*image.naturalHeight/image.naturalWidth);
-            return {frame,image,rect,imageHeight};
+          if(!image||!image.naturalWidth||!image.naturalHeight)return null;
+          const imageHeight=Math.max(rect.height,rect.width*image.naturalHeight/image.naturalWidth);
+          if(Math.abs(Number(image.dataset.renderedHeight||0)-imageHeight)>1){
+            image.style.height=`${imageHeight}px`;
+            image.dataset.renderedHeight=String(imageHeight);
           }
-          return null;
+          return {frame,image,rect,imageHeight};
         }).filter(Boolean);
         frames.forEach(({frame,image,rect,imageHeight})=>{
-          image.style.height=`${imageHeight}px`;
           const progress=Math.max(0,Math.min(1,(viewportHeight-rect.top)/(viewportHeight+rect.height)));
-          frame.style.setProperty('--scroll-shift',`${-(imageHeight-rect.height)*progress}px`);
+          image.style.transform=`translate3d(0,${-(imageHeight-rect.height)*progress}px,0)`;
         });
       });
     }
+    const bannerObserver=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        const image=entry.target.querySelector('.banner-image');
+        if(entry.isIntersecting){
+          visibleBanners.add(entry.target);
+          if(image)image.style.willChange='transform';
+        }else{
+          visibleBanners.delete(entry.target);
+          if(image){image.style.willChange='auto';image.style.transform='none';}
+        }
+      });
+      scheduleBannerUpdate();
+    },{rootMargin:'100px 0px'});
     bannerFrames.forEach(frame=>{
       const image=frame.querySelector('.banner-image');
       if(image)image.addEventListener('load',scheduleBannerUpdate,{once:true});
@@ -549,6 +559,5 @@
     window.addEventListener('scroll',scheduleBannerUpdate,{passive:true});
     window.addEventListener('resize',scheduleBannerUpdate,{passive:true});
   }
-</script>
 </body>
 </html>
