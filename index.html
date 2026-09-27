@@ -242,10 +242,11 @@
     aspect-ratio:12/5;
     border-left:0;
     border-right:0;
+    overflow:hidden;
     background-color:#090909;
   }
 
-  .project .viewport .banner-image{position:absolute;top:-20%;left:0;z-index:0;display:block;width:100%;height:140%;object-fit:cover;object-position:center;transform:translate3d(0,var(--scroll-shift,0px),0);will-change:transform}
+  .project .viewport .banner-image{position:absolute;top:0;left:0;z-index:0;display:block;width:100%;height:auto;max-width:none;object-fit:cover;object-position:center;transform:translate3d(0,var(--scroll-shift,0px),0);will-change:transform}
   .project .viewport::before{z-index:1;pointer-events:none}
   .project .viewport .status{z-index:2}
   #vp-self .banner-image{object-position:center}
@@ -507,8 +508,8 @@
   function closeNav(){setNavOpen(false)}
   document.addEventListener('keydown',event=>{if(event.key==='Escape')closeNav()});
 
-  // Move the oversized image gently inside each fixed, full-width banner as it
-  // crosses the viewport. Only visible banners are measured on scroll.
+  // Pan through each full-height cover image while its fixed banner crosses
+  // the viewport, revealing the complete image from top to bottom.
   const bannerFrames=[...document.querySelectorAll('.project .viewport')];
   const visibleBanners=new Set();
   const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -517,7 +518,6 @@
       entries.forEach(entry=>entry.isIntersecting?visibleBanners.add(entry.target):visibleBanners.delete(entry.target));
       scheduleBannerUpdate();
     },{rootMargin:'100px 0px'});
-    bannerFrames.forEach(frame=>bannerObserver.observe(frame));
     let bannerUpdatePending=false;
     function scheduleBannerUpdate(){
       if(bannerUpdatePending)return;
@@ -525,14 +525,27 @@
       requestAnimationFrame(()=>{
         bannerUpdatePending=false;
         const viewportHeight=window.innerHeight||1;
-        const frames=[...visibleBanners].map(frame=>({frame,rect:frame.getBoundingClientRect()}));
-        frames.forEach(({frame,rect})=>{
-          const distance=(rect.top+rect.height/2-viewportHeight/2)/(viewportHeight/2+rect.height/2);
-          const progress=Math.max(-1,Math.min(1,distance));
-          frame.style.setProperty('--scroll-shift',`${-progress*rect.height*.1}px`);
+        const frames=[...visibleBanners].map(frame=>{
+          const rect=frame.getBoundingClientRect();
+          const image=frame.querySelector('.banner-image');
+          if(image&&image.naturalWidth&&image.naturalHeight){
+            const imageHeight=Math.max(rect.height,rect.width*image.naturalHeight/image.naturalWidth);
+            return {frame,image,rect,imageHeight};
+          }
+          return null;
+        }).filter(Boolean);
+        frames.forEach(({frame,image,rect,imageHeight})=>{
+          image.style.height=`${imageHeight}px`;
+          const progress=Math.max(0,Math.min(1,(viewportHeight-rect.top)/(viewportHeight+rect.height)));
+          frame.style.setProperty('--scroll-shift',`${-(imageHeight-rect.height)*progress}px`);
         });
       });
     }
+    bannerFrames.forEach(frame=>{
+      const image=frame.querySelector('.banner-image');
+      if(image)image.addEventListener('load',scheduleBannerUpdate,{once:true});
+      bannerObserver.observe(frame);
+    });
     window.addEventListener('scroll',scheduleBannerUpdate,{passive:true});
     window.addEventListener('resize',scheduleBannerUpdate,{passive:true});
   }
