@@ -227,9 +227,11 @@ nav > a:hover::after,nav > a:focus-visible::after,.nav-category:hover::before,.n
   #professional .sec-head,#jams .sec-head,#academic .sec-head{padding-top:80px}
 }
 @media(max-width:720px){
+  /* Keep the mobile menu fixed to the viewport, not the blurred header. */
+  header{background:rgba(26,27,29,.98);backdrop-filter:none;-webkit-backdrop-filter:none}
   header .wrap{min-height:72px;padding:0 20px}
   .mark{font-size:15px}
-  nav{background:rgba(7,8,9,.98);padding:calc(96px + var(--safe-t)) 26px 40px;gap:14px;font-size:23px}
+  nav{top:calc(72px + var(--safe-t));bottom:0;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;background:rgba(7,8,9,.98);padding:24px 26px calc(40px + var(--safe-b));gap:14px;font-size:23px}
   nav > a,.nav-category{min-height:52px}
   nav > a::after,.nav-category::before{bottom:2px}
   .nav-dropdown{width:100%}
@@ -261,6 +263,12 @@ nav > a:hover::after,nav > a:focus-visible::after,.nav-category:hover::before,.n
   #tools{padding:96px 0 105px}
   .tool-group .tools{grid-template-columns:repeat(2,minmax(0,1fr))}
   #contact .wrap{gap:42px}
+}
+@media(max-width:720px){
+  /* These covers already match the banner ratio; show the artwork itself edge to edge. */
+  .project .viewport,#vp-abyssos{aspect-ratio:1942/809}
+  #vp-negedge,#vp-self,#vp-remini{background-image:none}
+  #vp-negedge .banner-image,#vp-self .banner-image,#vp-remini .banner-image{object-fit:cover;filter:none}
 }
 @media(prefers-reduced-motion:reduce){
   nav > a::after,.nav-category::before,.tool-icon,.project .visit{transition:none}
