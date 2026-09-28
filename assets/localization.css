@@ -9,7 +9,7 @@
 .locale-options button:hover,.locale-options button:focus-visible,.locale-options button[aria-pressed="true"]{background:rgba(225,44,53,.13);color:#fff;outline:none}
 .locale-options button[aria-pressed="true"]{border-left:2px solid #e12c35;padding-left:10px}
 .topbar-locale{display:flex;align-items:center;justify-content:flex-end;gap:20px;min-width:0}
-html[lang="ja"] .hero h1{white-space:normal;text-transform:none;text-wrap:balance;overflow-wrap:anywhere}
+html[lang="ja"] .hero h1{white-space:normal;text-wrap:balance;overflow-wrap:anywhere}
 @media(max-width:720px){
   nav .locale-picker{width:100%;margin-top:12px}
   nav .locale-trigger{min-height:48px;padding:10px 14px;font-size:15px}
