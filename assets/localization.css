@@ -1,0 +1,24 @@
+.locale-picker{position:relative;flex:none;font-family:'Chakra Petch','Montserrat',sans-serif}
+.locale-trigger{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:58px;min-height:36px;padding:7px 10px;border:1px solid rgba(255,255,255,.42);background:rgba(15,16,18,.75);color:#f5f5f3;font:700 11px/1 'Chakra Petch','Montserrat',sans-serif;letter-spacing:.12em;cursor:inherit}
+.locale-trigger::after{content:'⌄';color:#e12c35;font-size:15px;line-height:.7;transition:transform .2s ease}
+.locale-picker.open .locale-trigger::after{transform:rotate(180deg)}
+.locale-trigger:hover,.locale-trigger:focus-visible{border-color:#e12c35;outline:none}
+.locale-options{position:absolute;top:calc(100% + 8px);right:0;z-index:40;min-width:146px;padding:6px;border:1px solid #56585a;border-top:3px solid #e12c35;background:#141618;box-shadow:0 16px 34px rgba(0,0,0,.55);opacity:0;visibility:hidden;transform:translateY(-8px);pointer-events:none;transition:opacity .2s ease,transform .2s ease,visibility 0s linear .2s}
+.locale-picker.open .locale-options{opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto;transition:opacity .2s ease,transform .2s ease,visibility 0s}
+.locale-options button{display:block;width:100%;padding:10px 12px;border:0;background:transparent;color:#c8c9ca;text-align:left;font:600 12px/1.2 'Chakra Petch','Montserrat',sans-serif;cursor:inherit}
+.locale-options button:hover,.locale-options button:focus-visible,.locale-options button[aria-pressed="true"]{background:rgba(225,44,53,.13);color:#fff;outline:none}
+.locale-options button[aria-pressed="true"]{border-left:2px solid #e12c35;padding-left:10px}
+.topbar-locale{display:flex;align-items:center;justify-content:flex-end;gap:20px;min-width:0}
+html[lang="ja"] .hero h1{white-space:normal;text-transform:none;text-wrap:balance;overflow-wrap:anywhere}
+@media(max-width:720px){
+  nav .locale-picker{width:100%;margin-top:12px}
+  nav .locale-trigger{min-height:48px;padding:10px 14px;font-size:15px}
+  nav .locale-options{position:static;width:min(220px,100%);margin-top:8px}
+  nav .locale-picker:not(.open) .locale-options{display:none}
+}
+@media(max-width:620px){
+  .topbar-locale{gap:9px}
+  .topbar-locale .locale-trigger{min-width:49px;min-height:32px;padding:6px;font-size:10px}
+  .topbar-locale .brand{font-size:11px;letter-spacing:.04em;white-space:nowrap}
+}
+@media(prefers-reduced-motion:reduce){.locale-trigger::after,.locale-options{transition:none}}

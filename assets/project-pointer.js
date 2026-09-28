@@ -12,7 +12,8 @@
     trailToggle.addEventListener('click',()=>{
       trailEnabled=!trailEnabled;
       trailToggle.setAttribute('aria-pressed',String(trailEnabled));
-      trailToggle.textContent=`Trail + drawing: ${trailEnabled?'On':'Off'}`;
+      const toggleLabel=`Trail + drawing: ${trailEnabled?'On':'Off'}`;
+      trailToggle.textContent=window.portfolioTranslate?.(toggleLabel)??toggleLabel;
       if(!trailEnabled){
         trailPoints.length=0;
         completedStrokes.length=0;

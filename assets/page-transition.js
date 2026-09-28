@@ -75,8 +75,10 @@
   }
   if (direction === 'project' || direction === 'home' || direction === 'settled') {
     try {
-      const cleanUrl = window.location.pathname + window.location.hash;
-      window.history.replaceState(window.history.state, '', cleanUrl);
+      const cleanUrl = new URL(window.location.href);
+      ['transition', 'returnY', 'returnAnchor', 'returnTop', 'resumeY', 'resumeAnchor', 'resumeTop']
+        .forEach(key => cleanUrl.searchParams.delete(key));
+      window.history.replaceState(window.history.state, '', cleanUrl.pathname + cleanUrl.search + cleanUrl.hash);
     } catch (_) {
       // The transition still works if this browser cannot rewrite local file URLs.
     }
@@ -94,6 +96,9 @@
     const link = projectLink || homeLink;
     const nextUrl = new URL(link.href, window.location.href);
     nextUrl.searchParams.set('transition', direction);
+    const activeLanguage = root.dataset.locale || params.get('lang') || 'en';
+    if (activeLanguage === 'it' || activeLanguage === 'ja') nextUrl.searchParams.set('lang', activeLanguage);
+    else nextUrl.searchParams.delete('lang');
     if (projectLink && document.getElementById('professional')) {
       const markerY = Math.min(window.innerHeight / 3, 240);
       const anchors = document.querySelectorAll('section[id], .project[id]');
