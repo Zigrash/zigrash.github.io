@@ -92,7 +92,7 @@ main{width:100%;margin:0;padding:0}
   overflow:hidden;isolation:isolate;background:#0e0f10;
 }
 .cover{grid-column:1;grid-row:1;position:relative;z-index:0;width:100%;height:100%;min-height:0;overflow:hidden;background:#080809}
-.cover img{position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:center}
+.cover img{position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:center;pointer-events:none;user-select:none;-webkit-user-drag:none}
 .cover img[src$="ikm.webp"]{object-fit:contain}
 .cover::after{
   content:"";position:absolute;inset:0;pointer-events:none;

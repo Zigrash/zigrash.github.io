@@ -397,6 +397,9 @@
   @media(max-width:720px){.hero-explorer-fallback{left:50%;top:34%;width:min(60vw,40svh)}}
 </style>
 <link rel="stylesheet" href="./assets/kojima-experiment.css">
+<link rel="stylesheet" href="./assets/localization.css">
+<script src="./assets/locales-home.js" defer></script>
+<script src="./assets/localization.js" defer></script>
 <noscript><style>.hero-explorer-fallback{opacity:.85}</style></noscript>
 </head>
 <body>
@@ -644,7 +647,8 @@
   function setNavOpen(open){
     nav.classList.toggle('open',open);
     btn.textContent=open?'×':'☰';
-    btn.setAttribute('aria-label',open?'Close menu':'Open menu');
+    const menuLabel=open?'Close menu':'Open menu';
+    btn.setAttribute('aria-label',window.portfolioTranslate?.(menuLabel)??menuLabel);
     btn.setAttribute('aria-expanded',String(open));
   }
   btn.addEventListener('click',()=>setNavOpen(!nav.classList.contains('open')));
@@ -678,7 +682,8 @@
     trailToggle.addEventListener('click',()=>{
       trailEnabled=!trailEnabled;
       trailToggle.setAttribute('aria-pressed',String(trailEnabled));
-      trailToggle.textContent=`Trail + drawing: ${trailEnabled?'On':'Off'}`;
+      const toggleLabel=`Trail + drawing: ${trailEnabled?'On':'Off'}`;
+      trailToggle.textContent=window.portfolioTranslate?.(toggleLabel)??toggleLabel;
       if(!trailEnabled){
         trailPoints.length=0;
         completedStrokes.length=0;
