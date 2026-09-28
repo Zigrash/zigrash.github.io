@@ -83,7 +83,7 @@ nav > a:hover::after,nav > a:focus-visible::after,.nav-category:hover::before,.n
 }
 .hero .name-accent{color:var(--accent)}
 .hero p{
-  max-width:58ch;margin-top:30px;padding-left:20px;
+  max-width:96ch;margin-top:30px;padding-left:20px;
   border-left:3px solid var(--accent);background:none;
   color:#e0e0df;font-size:clamp(15px,1.15vw,18px);line-height:1.62;
 }
@@ -163,6 +163,7 @@ nav > a:hover::after,nav > a:focus-visible::after,.nav-category:hover::before,.n
 .stats div{color:#f4f4f3;font-size:13px}
 .stats div span{color:#b5b6b7;font-size:10px;letter-spacing:.17em}
 .project p.desc{max-width:59ch;margin:0 0 24px;color:#e2e3e3;font-size:clamp(14px,1vw,16px);line-height:1.65;text-shadow:0 2px 12px #000}
+.project p.desc .keep-line{white-space:nowrap}
 .project .award{margin:0 0 20px;border-color:#a1a1a1;background:rgba(0,0,0,.55);color:#fff}
 .project-actions{justify-content:flex-start;gap:10px;margin:0}
 .project .visit,.project .project-actions .visit{
