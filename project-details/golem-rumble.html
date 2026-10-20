@@ -10,10 +10,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&display=swap" rel="stylesheet">
 <script src="../assets/page-transition.js"></script>
 <link rel="stylesheet" href="./project-page.css">
+<link rel="stylesheet" href="./self.css">
+<link rel="stylesheet" href="./steam-projects.css">
 <link rel="stylesheet" href="../assets/localization.css">
 <script src="../assets/project-pointer.js" defer></script>
 <script src="../assets/locales-projects.js" defer></script>
 <script src="../assets/localization.js" defer></script>
+<script src="../assets/vendor/hls.min.js" defer></script>
+<script src="../assets/steam-trailers.js" defer></script>
 </head>
 <body>
 <div class="page-transition" aria-hidden="true"></div>
@@ -33,12 +37,12 @@
     </div>
     <figure class="cover"><img src="../assets/golem-rumble-banner.png" alt="Golem Rumble project artwork" decoding="async" draggable="false"></figure>
   </section>
-  <section class="process">
-    <div class="eyebrow">My contribution</div>
-    <h2>The work behind the project</h2>
-    <p>Designed and built the map following the required style asked by the team. Led the art department and took care of lighting, shaders and textures.</p>
-    
-    <div class="page-actions"><a class="action" href="https://store.steampowered.com/app/4461610/Golem_Rumble/?beta=0" target="_blank" rel="noopener noreferrer">View on Steam</a></div>
+  <section class="self-media steam-trailer" aria-labelledby="trailer-title">
+    <div class="eyebrow">Watch</div>
+    <h2 id="trailer-title">Golem Rumble - Teaser Trailer</h2>
+    <div class="self-video"><video controls playsinline preload="none" poster="../assets/golem-rumble-banner.png" aria-label="Golem Rumble - Teaser Trailer" data-steam-hls="https://video.akamai.steamstatic.com/store_trailers/4461610/1661466115/e3e236005b5815a8e31f169fe258bd7e66fe4ac8/1774961580/hls_264_master.m3u8?t=1774999710">Your browser does not support this video. <a href="https://store.steampowered.com/app/4461610/" target="_blank" rel="noopener noreferrer">Watch on Steam</a></video></div>
+    <p class="trailer-error" role="status" hidden>The trailer could not load here. You can watch it on the Steam page below.</p>
+    <div class="page-actions"><a class="action" href="https://store.steampowered.com/app/4461610/" target="_blank" rel="noopener noreferrer">View on Steam</a></div>
   </section>
 </main>
 </body>

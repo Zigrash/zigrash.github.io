@@ -110,24 +110,24 @@
   @view-transition{navigation:auto}
   .page-transition{display:none}
   .page-preview-shell{position:fixed;top:0;bottom:0;z-index:1001;width:0;overflow:hidden;pointer-events:none}
-  .page-preview-shell-project{left:0;background:#050505}
-  .page-preview-shell-home{right:0;background:#0b0c0a}
+  .page-preview-shell-project{right:0;background:#050505}
+  .page-preview-shell-home{left:0;background:#0b0c0a}
   .page-preview-shell.is-revealing{animation:preview-expand .72s cubic-bezier(.72,0,.25,1) both}
   .page-preview{position:absolute;top:0;width:100vw;height:100vh;border:0;background:transparent;pointer-events:none}
-  .page-preview-shell-project .page-preview{left:0}
-  .page-preview-shell-home .page-preview{right:0}
+  .page-preview-shell-project .page-preview{right:0}
+  .page-preview-shell-home .page-preview{left:0}
   .page-preview-edge{position:fixed;top:0;bottom:0;z-index:1002;width:12px;background:#ff3945;box-shadow:0 0 22px rgba(211,31,42,.7);pointer-events:none;opacity:0}
-  .page-preview-edge-project{left:0}
-  .page-preview-edge-home{right:0}
-  .page-preview-edge-project.is-revealing{opacity:1;animation:preview-edge-right .72s cubic-bezier(.72,0,.25,1) both}
-  .page-preview-edge-home.is-revealing{opacity:1;animation:preview-edge-left .72s cubic-bezier(.72,0,.25,1) both}
+  .page-preview-edge-project{right:0}
+  .page-preview-edge-home{left:0}
+  .page-preview-edge-project.is-revealing{opacity:1;animation:preview-edge-left .72s cubic-bezier(.72,0,.25,1) both}
+  .page-preview-edge-home.is-revealing{opacity:1;animation:preview-edge-right .72s cubic-bezier(.72,0,.25,1) both}
   @keyframes preview-expand{from{width:0}to{width:100vw}}
   @keyframes preview-edge-right{from{transform:translateX(-12px)}to{transform:translateX(100vw)}}
   @keyframes preview-edge-left{from{transform:translateX(12px)}to{transform:translateX(-100vw)}}
   html.native-page-transition::view-transition-new(root){z-index:1;animation:none}
   html.native-page-transition::view-transition-old(root){z-index:2}
-  html.native-page-transition.page-enter-project::view-transition-old(root){border-left:12px solid #ff3945;box-shadow:-12px 0 22px rgba(211,31,42,.6);animation:native-old-right .72s cubic-bezier(.72,0,.25,1) both}
-  html.native-page-transition.page-enter-home::view-transition-old(root){border-right:12px solid #ff3945;box-shadow:12px 0 22px rgba(211,31,42,.6);animation:native-old-left .72s cubic-bezier(.72,0,.25,1) both}
+  html.native-page-transition.page-enter-project::view-transition-old(root){border-right:12px solid #ff3945;box-shadow:12px 0 22px rgba(211,31,42,.6);animation:native-old-left .72s cubic-bezier(.72,0,.25,1) both}
+  html.native-page-transition.page-enter-home::view-transition-old(root){border-left:12px solid #ff3945;box-shadow:-12px 0 22px rgba(211,31,42,.6);animation:native-old-right .72s cubic-bezier(.72,0,.25,1) both}
   @keyframes native-old-right{from{transform:translateX(0)}to{transform:translateX(110%)}}
   @keyframes native-old-left{from{transform:translateX(0)}to{transform:translateX(-110%)}}
   @media(prefers-reduced-motion:reduce){.page-preview-shell,.page-preview-edge{display:none}}
@@ -500,12 +500,12 @@
     </div>
 
     <div class="project" id="project-abyssos">
-      <div class="viewport cover" id="vp-abyssos"><img class="banner-image" src="./assets/abyssos.webp" alt="" loading="lazy" decoding="async"><span class="status wip">IN PRODUCTION</span></div>
+      <div class="viewport cover" id="vp-abyssos"><img class="banner-image" src="./assets/abyssos-banner.png" alt="" loading="lazy" decoding="async"><span class="status wip">IN PRODUCTION</span></div>
       <div>
         <h3>A.B.Y.S.S.O.S.</h3>
         <div class="stats">
           <div><span>Role</span>Technical Level Artist — directing art &amp; sound</div>
-          <div><span>Team</span>11 people</div>
+          <div><span>Team</span>9 people</div>
           <div><span>Duration</span>In development since May 2026</div>
         </div>
         <p class="desc">Co-op horror game built in Unreal Engine 5. Directing the art and sound department while
@@ -615,6 +615,7 @@
         <span class="tool-icon" role="img" aria-label="Substance 3D Painter" title="Substance 3D Painter" data-label="Substance Painter"><span class="brand-tile painter">Pt</span></span>
         <span class="tool-icon" role="img" aria-label="Substance 3D Designer" title="Substance 3D Designer" data-label="Substance Designer"><span class="brand-tile">Ds</span></span>
         <span class="tool-icon" role="img" aria-label="Autodesk Maya" title="Autodesk Maya" data-label="Maya"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/maya/maya-original.svg" alt=""></span>
+        <span class="tool-icon" role="img" aria-label="Marmoset Toolbag" title="Marmoset Toolbag" data-label="Marmoset"><img src="./assets/marmoset.png" alt=""></span>
       </div>
     </div>
     <div class="tool-group" aria-labelledby="tools-planning">
