@@ -1,6 +1,10 @@
 window.PORTFOLIO_LOCALES_PROJECTS = {
   it: {
     text: {
+      "Resume": "Curriculum",
+      "Resume — Lorenzo Rocco": "Curriculum — Lorenzo Rocco",
+      "Download EU PDF": "Scarica PDF UE",
+      "Lorenzo Rocco's resume: experience, skills, tools, languages and education": "Curriculum di Lorenzo Rocco: esperienza, competenze, strumenti, lingue e formazione",
       "Trail + drawing: On": "Scia e disegno: attivi",
       "Trail + drawing: Off": "Scia e disegno: disattivati",
       "← Home Page": "← Pagina iniziale",
@@ -63,6 +67,10 @@ window.PORTFOLIO_LOCALES_PROJECTS = {
   },
   ja: {
     text: {
+      "Resume": "履歴書",
+      "Resume — Lorenzo Rocco": "履歴書 — Lorenzo Rocco",
+      "Download EU PDF": "EU版PDFをダウンロード",
+      "Lorenzo Rocco's resume: experience, skills, tools, languages and education": "ロレンツォ・ロッコの履歴書：経験、スキル、ツール、言語、学歴",
       "Trail + drawing: On": "軌跡と描画：オン",
       "Trail + drawing: Off": "軌跡と描画：オフ",
       "← Home Page": "← ホームページ",

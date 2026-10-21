@@ -2,6 +2,7 @@
 window.PORTFOLIO_LOCALES_HOME = {
   it: {
     text: {
+      "Resume": "Curriculum",
       "Technical Level Artist — Horror Environments": "Technical Level Artist — Ambienti horror",
       "Trail + drawing: On": "Scia e disegno: attivi",
       "Trail + drawing: Off": "Scia e disegno: disattivati",
@@ -82,6 +83,7 @@ window.PORTFOLIO_LOCALES_HOME = {
   },
   ja: {
     text: {
+      "Resume": "履歴書",
       "Technical Level Artist — Horror Environments": "テクニカルレベルアーティスト — ホラー環境制作",
       "Trail + drawing: On": "軌跡・描画：オン",
       "Trail + drawing: Off": "軌跡・描画：オフ",

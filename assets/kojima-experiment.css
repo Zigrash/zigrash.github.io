@@ -275,3 +275,6 @@ nav > a:hover::after,nav > a:focus-visible::after,.nav-category:hover::before,.n
 @media(prefers-reduced-motion:reduce){
   nav > a::after,.nav-category::before,.tool-icon,.project .visit{transition:none}
 }
+
+/* Allow room for the Resume navigation link. */
+@media(min-width:721px) and (max-width:1100px){nav{gap:clamp(12px,1.5vw,18px)}}
