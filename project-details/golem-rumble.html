@@ -12,14 +12,16 @@
 <link rel="stylesheet" href="./project-page.css">
 <link rel="stylesheet" href="./self.css">
 <link rel="stylesheet" href="./steam-projects.css">
+<link rel="stylesheet" href="./project-compact.css">
 <link rel="stylesheet" href="../assets/localization.css">
 <script src="../assets/project-pointer.js" defer></script>
 <script src="../assets/locales-projects.js" defer></script>
 <script src="../assets/localization.js" defer></script>
 <script src="../assets/vendor/hls.min.js" defer></script>
 <script src="../assets/steam-trailers.js" defer></script>
+
 </head>
-<body>
+<body class="golem-rumble-page compact-project-page">
 <div class="page-transition" aria-hidden="true"></div>
 <canvas id="cursor-trail" aria-hidden="true"></canvas>
 <button id="trail-toggle" type="button" aria-pressed="true" hidden>Trail + drawing: On</button>
@@ -43,6 +45,75 @@
     <div class="self-video"><video controls playsinline preload="none" poster="../assets/golem-rumble-banner.png" aria-label="Golem Rumble - Teaser Trailer" data-steam-hls="https://video.akamai.steamstatic.com/store_trailers/4461610/1661466115/e3e236005b5815a8e31f169fe258bd7e66fe4ac8/1774961580/hls_264_master.m3u8?t=1774999710">Your browser does not support this video. <a href="https://store.steampowered.com/app/4461610/" target="_blank" rel="noopener noreferrer">Watch on Steam</a></video></div>
     <p class="trailer-error" role="status" hidden>The trailer could not load here. You can watch it on the Steam page below.</p>
     <div class="page-actions"><a class="action" href="https://store.steampowered.com/app/4461610/" target="_blank" rel="noopener noreferrer">View on Steam</a></div>
+  </section>
+  <section id="golem-planning" class="self-media project-breakdown planning-phase" aria-labelledby="planning-title">
+    <div class="eyebrow">Process</div>
+    <h2 id="planning-title">Planning</h2>
+    <p class="planning-copy">I started with collecting various references that ranged from real world structures and environments to videogames like Crash Bandicoot and other Mayan themed IPs. Gathering shapes, color palette, mood and composition.</p>
+    <div class="self-gallery">
+      <figure><div class="process-image"><img draggable="false" src="../assets/golem-rumble-planning.png" alt="Golem Rumble reference board with Mayan architecture, stylized masks and characters, environment designs, color palettes and lighting references" width="1387" height="736" loading="lazy" decoding="async"></div></figure>
+    </div>
+  </section>
+  <section id="golem-blocking" class="self-media project-breakdown planning-phase" aria-labelledby="blocking-title">
+    <div class="eyebrow">Process</div>
+    <h2 id="blocking-title">Blocking Phase</h2>
+    <p class="planning-copy">After enstablishing the right shapes and architecture, I started blocking out the first pieces following the correct metrics and pivot points to build my scene in engine.</p>
+    <div class="self-gallery">
+      <figure><div class="process-image"><img draggable="false" src="../assets/golem-rumble-blocking.png" alt="Grey architectural blockout of a stepped Mayan-inspired structure for Golem Rumble" width="1280" height="760" loading="lazy" decoding="async"></div></figure>
+    </div>
+  </section>
+  <section id="golem-arena" class="self-media project-breakdown planning-phase" aria-labelledby="arena-title">
+    <div class="eyebrow">Process</div>
+    <h2 id="arena-title">Adding the Arena</h2>
+    <p class="planning-copy">I then began building the centrepiece of the level: the arena. I iterated on its dimensions to give two players enough room to fight, create distance, and rethink their strategies. I also added a raised perimeter to introduce verticality, along with traps to influence player movement and vary the flow of combat.</p>
+    <div class="self-gallery">
+      <figure><div class="process-image"><img draggable="false" src="../assets/golem-rumble-arena-blockout.png" alt="Golem Rumble arena blockout with a central fighting area, raised perimeter and surrounding Mayan-inspired structures" width="768" height="417" loading="lazy" decoding="async"></div></figure>
+    </div>
+  </section>
+  <section id="golem-details" class="self-media project-breakdown planning-phase" aria-labelledby="details-title">
+    <div class="eyebrow">Process</div>
+    <h2 id="details-title">Adding Details</h2>
+    <p class="planning-copy">I then added decorative details to give each structure a distinct identity and reflect its faction. I used colour and architectural elements to reinforce that identity and make the structures more visually engaging.</p>
+    <div class="self-gallery">
+      <figure><div class="process-image"><img draggable="false" src="../assets/golem-rumble-structure-details.png" alt="Decorated Mayan-inspired structure with red accents, sculpted figures and geometric architectural details in Golem Rumble" width="640" height="514" loading="lazy" decoding="async"></div></figure>
+    </div>
+  </section>
+  <section id="golem-surroundings" class="self-media project-breakdown planning-phase" aria-labelledby="surroundings-title">
+    <div class="eyebrow">Process</div>
+    <h2 id="surroundings-title">Working on the Surroundings of the Arena</h2>
+    <p class="planning-copy">Once the main structures were in place, I began developing the environment around the arena. I added a more detailed skydome, terrain, trees, rocks, and other environmental elements to make the scene more visually appealing.</p>
+    <div class="self-gallery">
+      <figure><div class="process-image"><img draggable="false" src="../assets/golem-rumble-arena-surroundings.png" alt="Golem Rumble arena environment with a cloudy skydome, palm trees, vegetation and stone structures surrounding the central fighting area" width="1536" height="834" loading="lazy" decoding="async"></div></figure>
+    </div>
+  </section>
+  <section id="golem-alpha" class="self-media project-breakdown planning-phase" aria-labelledby="alpha-title">
+    <div class="eyebrow">Process</div>
+    <h2 id="alpha-title">Working on the Alpha Scene</h2>
+    <p class="planning-copy">Once all the scene elements were in place, I began working on textures to introduce colour to the level and create visual harmony throughout the environment.</p>
+    <div class="self-gallery">
+      <figure><div class="process-image"><img draggable="false" src="../assets/golem-rumble-alpha-scene.png" alt="Golem Rumble alpha scene with textured arena surfaces, colourful faction structures, palm trees and flaming braziers" width="1536" height="833" loading="lazy" decoding="async"></div></figure>
+    </div>
+  </section>
+  <section id="golem-final-results" class="self-media project-breakdown planning-phase" aria-labelledby="final-results-title">
+    <div class="eyebrow">Process</div>
+    <h2 id="final-results-title">Reaching the Final Results</h2>
+    <p class="planning-copy">After spending a couple of days in Substance Designer, I created the final textures for the scene. I also added props to reinforce each faction's identity and refined the arena layout to improve player movement.</p>
+    <div class="self-gallery">
+      <figure><div class="process-image"><img draggable="false" src="../assets/golem-rumble-final-arena.png" alt="Golem Rumble arena with final textures, contrasting red and blue faction structures, spectator stands and desert vegetation" width="1280" height="817" loading="lazy" decoding="async"></div></figure>
+    </div>
+  </section>
+  <section id="golem-deciding-round" class="self-media project-breakdown planning-phase" aria-labelledby="deciding-round-title">
+    <div class="eyebrow">Process</div>
+    <h2 id="deciding-round-title">One Last but Great Idea</h2>
+    <p class="planning-copy">In Golem Rumble, the first player to score three takedowns wins. This led me to ask: “What if both players reach two takedowns? Should the deciding round feel like just another attempt?” To make that moment feel more intense, I gave the arena a more dramatic atmosphere. I adjusted the direction and colour of the directional light, added a wall-of-fire shader, and introduced choral audio to heighten the tension and push both players to their limits.</p>
+    <div class="self-gallery">
+      <figure><div class="process-image"><img draggable="false" src="../assets/golem-rumble-deciding-round.png" alt="Golem Rumble arena with dramatic red lighting and walls of fire surrounding the fighting area for the deciding round" width="1280" height="817" loading="lazy" decoding="async"></div></figure>
+    </div>
+  </section>
+  <section id="golem-final-thoughts" class="self-media project-breakdown planning-phase" aria-labelledby="final-thoughts-title">
+    <div class="eyebrow">Reflection</div>
+    <h2 id="final-thoughts-title">Final Thoughts</h2>
+    <p class="planning-copy">I feel that Golem Rumble was an excellent showcase of my abilities as both an artist and a designer, challenging me to solve aesthetic and technical problems within a very short timeframe. Almost all playtesters responded positively to the visuals, and all of them enjoyed the surprise element in the fifth round. Although stylised environments are not my specialisation, I had a lot of fun working on this project.</p>
   </section>
 </main>
 </body>

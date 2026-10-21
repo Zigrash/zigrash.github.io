@@ -10,12 +10,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&display=swap" rel="stylesheet">
 <script src="../assets/page-transition.js"></script>
 <link rel="stylesheet" href="./project-page.css">
+<link rel="stylesheet" href="./self.css">
+<link rel="stylesheet" href="./steam-projects.css">
+<link rel="stylesheet" href="./project-compact.css">
+<link rel="stylesheet" href="./reminiscence.css">
 <link rel="stylesheet" href="../assets/localization.css">
 <script src="../assets/project-pointer.js" defer></script>
 <script src="../assets/locales-projects.js" defer></script>
 <script src="../assets/localization.js" defer></script>
+<script src="../assets/process-carousel.js" defer></script>
+<script src="../assets/self-video.js" defer></script>
 </head>
-<body>
+<body class="reminiscence-page compact-project-page">
 <div class="page-transition" aria-hidden="true"></div>
 <canvas id="cursor-trail" aria-hidden="true"></canvas>
 <button id="trail-toggle" type="button" aria-pressed="true" hidden>Trail + drawing: On</button>
@@ -33,12 +39,84 @@
     </div>
     <figure class="cover"><img src="../assets/remini-banner.png" alt="Reminiscence project artwork" decoding="async" draggable="false"></figure>
   </section>
-  <section class="process">
+  <section id="reminiscence-trailer" class="self-media" aria-labelledby="trailer-title">
+    <div class="eyebrow">Watch</div>
+    <h2 id="trailer-title">Reminiscence Trailer</h2>
+    <div class="self-video" data-self-trailer data-video-id="DkipRwvBP1g" data-video-title="Reminiscence Trailer">
+      <a class="self-video-link" style="--trailer-cover:url('../assets/remini-banner.png')" href="https://www.youtube.com/watch?v=DkipRwvBP1g" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">▶</span>Watch Reminiscence Trailer on YouTube</a>
+    </div>
+    <div class="page-actions"><a class="action" href="https://eventhorizonschool.itch.io/reminiscence" target="_blank" rel="noopener noreferrer">View on itch.io</a><a class="action" href="https://www.youtube.com/watch?v=DkipRwvBP1g" target="_blank" rel="noopener noreferrer">Watch on YouTube</a></div>
+  </section>
+  <section id="reminiscence-contribution" class="self-media project-breakdown planning-phase" aria-labelledby="contribution-title">
     <div class="eyebrow">My contribution</div>
-    <h2>The work behind the project</h2>
-    <p>Led the art department, designed levels and the narrative structure, using environmental storytelling as the primary way for the player to understand what happened</p>
+    <h2 id="contribution-title">The work behind the project</h2>
+    <p class="planning-copy">Led the art department, designed levels and the narrative structure, using environmental storytelling as the primary way for the player to understand what happened</p>
     
-    <div class="page-actions"><a class="action" href="https://eventhorizonschool.itch.io/reminiscence" target="_blank" rel="noopener noreferrer">View on itch.io</a></div>
+
+  </section>
+  <section id="reminiscence-planning" class="self-media project-breakdown planning-phase" aria-labelledby="planning-title">
+    <div class="eyebrow">Process</div>
+    <h2 id="planning-title">Planning Phase</h2>
+    <p class="planning-copy">I began by creating a top-down representation of the level and its loops. Inspired by P.T., I used the loop system to tell a story across multiple timelines. Each room of the house unlocked progressively as players completed the objectives of the current loop. Every loop featured its own object placements and new, exclusive interactions.</p>
+    <div class="self-gallery process-carousel" data-process-carousel>
+      <figure><div class="process-image">
+        <img src="../assets/reminiscence-planning/legend.png" data-carousel-image data-stage="Legend" alt="Legend for the Reminiscence loop maps: newspaper, picture, bottle, letter, sink and cat symbols" width="406" height="726" loading="eager" decoding="async" draggable="false">
+        <img src="../assets/reminiscence-planning/loop1.png" data-carousel-image data-stage="Loop 1" alt="Loop 1 house layout with most rooms blocked off and initial object placements" width="488" height="729" loading="eager" decoding="async" draggable="false" hidden>
+        <img src="../assets/reminiscence-planning/loop2.png" data-carousel-image data-stage="Loop 2" alt="Loop 2 house layout with the living room available and revised objective placements" width="402" height="609" loading="eager" decoding="async" draggable="false" hidden>
+        <img src="../assets/reminiscence-planning/loop3.png" data-carousel-image data-stage="Loop 3" alt="Loop 3 layout with the kitchen and dining area unlocked and new interactions" width="421" height="645" loading="eager" decoding="async" draggable="false" hidden>
+        <img src="../assets/reminiscence-planning/loop4.png" data-carousel-image data-stage="Loop 4" alt="Loop 4 layout with additional objects and interactions in the accessible rooms" width="371" height="588" loading="eager" decoding="async" draggable="false" hidden>
+        <img src="../assets/reminiscence-planning/loop5.png" data-carousel-image data-stage="Loop 5" alt="Loop 5 layout opening the garage and part of the upper floor, with new object placements" width="367" height="537" loading="eager" decoding="async" draggable="false" hidden>
+        <img src="../assets/reminiscence-planning/loop6.png" data-carousel-image data-stage="Loop 6" alt="Loop 6 layout showing the final route, restricted rooms and movement through the house" width="390" height="607" loading="eager" decoding="async" draggable="false" hidden>
+      </div></figure>
+      <div class="carousel-controls" hidden>
+        <label for="reminiscence-planning-slider">Drag to explore the legend and six level loops</label>
+        <output for="reminiscence-planning-slider">Legend (1 / 7)</output>
+        <input id="reminiscence-planning-slider" type="range" min="1" max="7" step="any" value="1" aria-valuetext="Legend (1 / 7)">
+      </div>
+    </div>
+  </section>
+  <section id="reminiscence-art-tasks" class="self-media project-breakdown planning-phase" aria-labelledby="art-tasks-title">
+    <div class="eyebrow">Process</div>
+    <h2 id="art-tasks-title">Assigning the Tasks to the Art Department</h2>
+    <p class="planning-copy">After defining the setting and visual style, I assigned individual tasks to each member of the art department, ranging from architectural tiles to props and interactable objects. I also selected two artists to focus exclusively on character production.</p>
+    <div class="self-gallery">
+      <figure><div class="process-image asset-list-image"><img src="../assets/reminiscence-art-asset-list.png" alt="Complete Reminiscence art asset list showing task groups, assigned artists, asset codes, priorities and completion statuses" width="6462" height="3602" loading="lazy" decoding="async" draggable="false"></div></figure>
+    </div>
+  </section>
+  <section id="reminiscence-downfall" class="self-media project-breakdown planning-phase" aria-labelledby="downfall-title">
+    <div class="eyebrow">Process</div>
+    <h2 id="downfall-title">Building the Sensation of Downfall</h2>
+    <p class="planning-copy">Reminiscence tells a tragic story of loss, with a protagonist who spends the rest of his life consumed by regret. To convey this feeling to the player, I used colour and the condition of the house to reflect his emotional state. What begins as a clean, bright home gradually becomes a worn, ruined, and dark shell.</p>
+    <div class="self-gallery process-carousel downfall-carousel" data-process-carousel>
+      <figure><div class="process-image">
+        <img src="../assets/reminiscence-downfall/01.png" data-carousel-image data-stage="Moving In" alt="Natan in a bright, clean house with warm wooden flooring and moving boxes" width="1920" height="1080" loading="eager" decoding="async" draggable="false">
+        <img src="../assets/reminiscence-downfall/02.png" data-carousel-image data-stage="A Bright Home" alt="A warmly lit living and dining room with healthy plants, clean furniture and a prepared meal" width="1920" height="1080" loading="eager" decoding="async" draggable="false" hidden>
+        <img src="../assets/reminiscence-downfall/03.png" data-carousel-image data-stage="Early Decline" alt="Natan beside a sparse dining table, a bottle and broken glass in the increasingly neglected house" width="1920" height="1080" loading="eager" decoding="async" draggable="false" hidden>
+        <img src="../assets/reminiscence-downfall/04.png" data-carousel-image data-stage="A Colder Atmosphere" alt="The living and dining room under cold blue light, with worn surfaces and a darker atmosphere" width="1920" height="1080" loading="eager" decoding="async" draggable="false" hidden>
+        <img src="../assets/reminiscence-downfall/05.png" data-carousel-image data-stage="A Dark, Worn Home" alt="Natan in a dark, deteriorating interior with damaged walls, cold colours and sparse lighting" width="1920" height="1080" loading="eager" decoding="async" draggable="false" hidden>
+      </div></figure>
+      <div class="carousel-controls" hidden>
+        <label for="reminiscence-downfall-slider">Drag to see the house change from a bright home to a dark, deteriorating interior</label>
+        <output for="reminiscence-downfall-slider">Moving In (1 / 5)</output>
+        <input id="reminiscence-downfall-slider" type="range" min="1" max="5" step="any" value="1" aria-valuetext="Moving In (1 / 5)">
+      </div>
+    </div>
+  </section>
+  <section id="reminiscence-menu" class="self-media project-breakdown planning-phase" aria-labelledby="menu-title">
+    <div class="eyebrow">Process</div>
+    <h2 id="menu-title">Adding a Sense of Completion in the Main Menu</h2>
+    <p class="planning-copy">The game ends with the protagonist reunited with his beloved, and I wanted the main menu to reflect that sense of reunion. Inspired by Final Fantasy XV, I designed the logo to change after completing the game: his wife goes from watching over him to resting comfortably in his arms.</p>
+    <div class="self-gallery process-carousel menu-carousel" data-process-carousel>
+      <figure><div class="process-image">
+        <img src="../assets/reminiscence-menu/before-completion.png" data-carousel-image data-stage="Before Completion" alt="Original Reminiscence main menu logo featuring the protagonist's wife alone above the title" width="4000" height="1772" loading="eager" decoding="async" draggable="false">
+        <img src="../assets/reminiscence-menu/after-completion.png" data-carousel-image data-stage="After Completion" alt="Reminiscence main menu logo after completing the game, showing the reunited couple embracing above the title" width="4000" height="1772" loading="eager" decoding="async" draggable="false" hidden>
+      </div></figure>
+      <div class="carousel-controls" hidden>
+        <label for="reminiscence-menu-slider">Drag to compare the main menu logo before and after completing the game</label>
+        <output for="reminiscence-menu-slider">Before Completion (1 / 2)</output>
+        <input id="reminiscence-menu-slider" type="range" min="1" max="2" step="any" value="1" aria-valuetext="Before Completion (1 / 2)">
+      </div>
+    </div>
   </section>
 </main>
 </body>

@@ -1,0 +1,31 @@
+/* Compact case studies, with full-width banners and proportional media. */
+.compact-project-page .self-media{width:100%;max-width:1120px;margin-inline:auto;padding:40px clamp(20px,3vw,32px)}
+body.compact-project-page :is(#self-breakdown,.project-breakdown){padding:30px clamp(20px,3vw,32px)}
+.compact-project-page .self-media h2{font-size:clamp(28px,3.2vw,44px);line-height:1.08;margin:12px 0 18px}
+.compact-project-page .self-media .eyebrow{font-size:10px}
+.compact-project-page .planning-phase .planning-copy{max-width:80ch;font-size:clamp(16px,1.2vw,17px);line-height:1.65;margin:0 0 18px}
+.compact-project-page .self-video{margin-bottom:16px}
+.compact-project-page .self-media .page-actions{margin-top:18px}
+.compact-project-page .self-gallery{gap:30px}
+body.compact-project-page :is(#self-breakdown,.project-breakdown)>:is(.eyebrow,h2,.gallery-intro){margin-left:0;margin-right:0}
+.compact-project-page .project-hero{height:clamp(360px,30vw,460px);min-height:360px;aspect-ratio:auto;margin-top:80px}
+.compact-project-page .cover img:not([src$="ikm.webp"]){object-fit:cover;object-position:center top}
+.in-kings-memory-page .cover{background:#000}
+.in-kings-memory-page.compact-project-page .cover img{object-fit:contain;object-position:right center;background:#000}
+.compact-project-page .hero-copy{padding:48px clamp(24px,7vw,112px) 32px}
+.compact-project-page h1{font-size:clamp(42px,5vw,76px);margin:12px 0 20px}
+.compact-project-page .meta{padding-top:14px;gap:12px 0}
+.compact-project-page .meta div{font-size:12px}
+@media(min-width:1001px){
+  .golem-rumble-page.compact-project-page .project-hero{height:auto;aspect-ratio:1942/809}
+}
+@media(max-width:1000px){
+  .compact-project-page .project-hero{height:auto;min-height:0}
+  .compact-project-page .hero-copy{padding:28px clamp(20px,5vw,56px) 32px}
+}
+@media(max-width:620px){
+  .compact-project-page .project-hero{margin-top:0}
+  .compact-project-page .self-media{padding-block:28px}
+  body.compact-project-page :is(#self-breakdown,.project-breakdown){padding-block:24px}
+  .compact-project-page h1{font-size:clamp(38px,9vw,52px)}
+}

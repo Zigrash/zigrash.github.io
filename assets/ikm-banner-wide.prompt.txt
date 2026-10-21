@@ -1,0 +1,10 @@
+Generator: built-in image_gen
+Source: ikm.webp
+Output: ikm-banner-wide.png
+
+Use case: precise-object-edit.
+Asset type: ultra-wide full-bleed website banner for In King's Memory.
+Input image 1 is the edit target: preserve its ornate metallic gold and silver gothic title lettering and crown.
+Reformat it into an ultra-wide 4:1 horizontal banner, ideally 2560 x 640 pixels, by extending the pure black background sideways and scaling the entire original logo proportionally. Preserve the complete crown and every letter; exact text is "In King's Memory", on two lines as in the original, with no changes to spelling or letter design.
+Place the complete logo centered at approximately 68% of canvas width and 47% of canvas height; its overall height should occupy about 70% of the banner height and its overall width approximately 35% of banner width. Leave the left 40% pure black for existing website heading overlays. Keep ample black space around every outer edge so the logo survives small responsive crops.
+Background stays pure black edge to edge. No new imagery, no scenery, no additional symbols, no frames, no gradients, no extra text. Keep original metallic material, highlights, engraving and crown shape. Do not stretch, crop, or redesign the logo. This is a wider arrangement of the supplied artwork, not a new logo.

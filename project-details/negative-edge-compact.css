@@ -1,0 +1,24 @@
+/* Keep the case study compact while preserving its media proportions and controls. */
+.negative-edge-page .self-media{width:100%;max-width:1120px;margin-inline:auto;padding:40px clamp(20px,3vw,32px)}
+body.negative-edge-page :is(#self-breakdown,.project-breakdown){padding:30px clamp(20px,3vw,32px)}
+.negative-edge-page .self-media h2{font-size:clamp(28px,3.2vw,44px);line-height:1.08;margin:12px 0 18px}
+.negative-edge-page .self-media .eyebrow{font-size:10px}
+.negative-edge-page .planning-phase .planning-copy{max-width:80ch;font-size:clamp(16px,1.2vw,17px);line-height:1.65;margin:0 0 18px}
+.negative-edge-page .self-video{margin-bottom:16px}
+.negative-edge-page .steam-trailer .page-actions{margin-top:18px}
+.negative-edge-page .project-hero{height:clamp(360px,30vw,460px);min-height:360px;aspect-ratio:auto;margin-top:80px}
+.negative-edge-page .cover img{object-fit:cover;object-position:center top}
+.negative-edge-page .hero-copy{padding:112px clamp(24px,7vw,112px) 32px}
+.negative-edge-page h1{font-size:clamp(42px,5vw,76px);margin:12px 0 20px}
+.negative-edge-page .meta{padding-top:14px;gap:12px 0}
+.negative-edge-page .meta div{font-size:12px}
+@media(max-width:1000px){
+  .negative-edge-page .project-hero{height:auto;min-height:0}
+  .negative-edge-page .hero-copy{padding:28px clamp(20px,5vw,56px) 32px}
+}
+@media(max-width:620px){
+  .negative-edge-page .project-hero{margin-top:0}
+  .negative-edge-page .self-media{padding-block:28px}
+  body.negative-edge-page :is(#self-breakdown,.project-breakdown){padding-block:24px}
+  .negative-edge-page h1{font-size:clamp(38px,9vw,52px)}
+}

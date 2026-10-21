@@ -12,14 +12,16 @@
 <link rel="stylesheet" href="./project-page.css">
 <link rel="stylesheet" href="./self.css">
 <link rel="stylesheet" href="./steam-projects.css">
+<link rel="stylesheet" href="./negative-edge-compact.css">
 <link rel="stylesheet" href="../assets/localization.css">
 <script src="../assets/project-pointer.js" defer></script>
 <script src="../assets/locales-projects.js" defer></script>
 <script src="../assets/localization.js" defer></script>
 <script src="../assets/vendor/hls.min.js" defer></script>
 <script src="../assets/steam-trailers.js" defer></script>
+<script src="../assets/process-carousel.js" defer></script>
 </head>
-<body>
+<body class="negative-edge-page">
 <div class="page-transition" aria-hidden="true"></div>
 <canvas id="cursor-trail" aria-hidden="true"></canvas>
 <button id="trail-toggle" type="button" aria-pressed="true" hidden>Trail + drawing: On</button>
@@ -43,6 +45,128 @@
     <div class="self-video"><video controls playsinline preload="none" poster="../assets/negedge-banner.png" aria-label="Negative Edge Demo - Gameplay Trailer" data-steam-hls="https://video.akamai.steamstatic.com/store_trailers/4825940/1582824589/446a985aab7908202947c34bfa779db693a597bb/1783606626/hls_264_master.m3u8?t=1783771272">Your browser does not support this video. <a href="https://store.steampowered.com/app/4825940/" target="_blank" rel="noopener noreferrer">Watch on Steam</a></video></div>
     <p class="trailer-error" role="status" hidden>The trailer could not load here. You can watch it on the Steam page below.</p>
     <div class="page-actions"><a class="action" href="https://store.steampowered.com/app/4825940/" target="_blank" rel="noopener noreferrer">View on Steam</a></div>
+  </section>
+  <section id="negative-edge-sketch" class="self-media project-breakdown planning-phase" aria-labelledby="sketch-title">
+    <div class="eyebrow">Process</div>
+    <h2 id="sketch-title">Sketching the Beginning of the Level</h2>
+    <p class="planning-copy">When I joined the Villains team, I was tasked with extending the existing level and creating more space for players to practise movement mechanics such as dashing, grappling, wall-running, and, of course, jumping. I drew a top-down map for the extension, grounding it in the team's existing worldbuilding. The layout included plenty of opportunities for backtracking and hidden collectibles. I deliberately left the area beyond the bridge in the top-left corner loosely defined so it could accommodate future changes.</p>
+    <div class="self-gallery">
+      <figure><div class="process-image diagram-image"><img src="../assets/negative-edge-first-canyon-sketch.png" alt="Initial top-down canyon sketch for Negative Edge, showing traversal routes, dash tutorials, grappling points, hidden collectibles and an open-ended area beyond the top-left bridge" width="1491" height="1055" loading="lazy" decoding="async" draggable="false"></div></figure>
+    </div>
+  </section>
+  <section id="negative-edge-blockout" class="self-media project-breakdown planning-phase" aria-labelledby="blockout-title">
+    <div class="eyebrow">Process</div>
+    <h2 id="blockout-title">Testing the Blockout</h2>
+    <p class="planning-copy">After sketching the top-down map, I moved straight into the engine and used its modelling tools to shape the blockout. I tested the level's dimensions and spacing to ensure that jumps and dashes covered the intended distances.</p>
+    <div class="self-video"><video controls playsinline preload="metadata" poster="../assets/negative-edge-blockout-poster.jpg" aria-label="Negative Edge blockout movement test"><source src="../assets/videos/negative-edge-blockout-test.mp4" type="video/mp4">Your browser does not support this video. <a href="../assets/videos/negative-edge-blockout-test.mp4">Open blockout test video</a></video></div>
+  </section>
+  <section id="negative-edge-revised-map" class="self-media project-breakdown planning-phase" aria-labelledby="revised-map-title">
+    <div class="eyebrow">Process</div>
+    <h2 id="revised-map-title">Reducing the Map to Meet the Team's Needs</h2>
+    <p class="planning-copy">Later in development, the team decided to cut some content, including a substantial portion of the level. Drawing on my backup plan, I revised the layout beyond the broken bridge to lead directly towards the next area, replacing the original, more complex route.</p>
+    <div class="self-gallery">
+      <figure><div class="process-image diagram-image"><img src="../assets/negative-edge-revised-canyon-map.png" alt="Revised Negative Edge canyon map showing a shorter route beyond the broken bridge, a wall-running section, a tutorial arena, grappling points and the elevator entrance" width="4960" height="3508" loading="lazy" decoding="async" draggable="false"></div></figure>
+    </div>
+  </section>
+  <section id="negative-edge-environment" class="self-media project-breakdown planning-phase" aria-labelledby="environment-title">
+    <div class="eyebrow">Process</div>
+    <h2 id="environment-title">Building the Environment</h2>
+    <p class="planning-copy">Once I had established the environment's layout with the blockout, I handed the set dressing over to another 3D artist. I provided guidelines, ongoing support, and feedback on models, textures, and shaders to help achieve the intended result.</p>
+    <div class="self-gallery process-carousel" data-process-carousel>
+      <figure><div class="process-image">
+        <img src="../assets/negative-edge-environment/blockout.png" data-carousel-image data-stage="Blockout" alt="Canyon rock structures and traversal platforms viewed from above" width="1929" height="776" loading="eager" decoding="async" draggable="false">
+        <img src="../assets/negative-edge-environment/blockout_02.png" data-carousel-image data-stage="Blockout_02" alt="Overview of the canyon environment blockout and tower" width="1940" height="774" loading="eager" decoding="async" draggable="false" hidden>
+        <img src="../assets/negative-edge-environment/blockout_03.png" data-carousel-image data-stage="Blockout_03" alt="Rock formations and a stone arch beside the tower" width="1155" height="655" loading="eager" decoding="async" draggable="false" hidden>
+        <img src="../assets/negative-edge-environment/blockout_04.png" data-carousel-image data-stage="Blockout_04" alt="Canyon rocks, arch and tower viewed from the opposite side" width="1112" height="620" loading="eager" decoding="async" draggable="false" hidden>
+        <img src="../assets/negative-edge-environment/blockout_05.png" data-carousel-image data-stage="Blockout_05" alt="Tall tower structure with floating rocks and adjoining cliff platforms" width="695" height="664" loading="eager" decoding="async" draggable="false" hidden>
+      </div></figure>
+      <div class="carousel-controls" hidden>
+        <label for="environment-slider">Drag to see the process from blockout to final result</label>
+        <output for="environment-slider">Blockout (1 / 5)</output>
+        <input id="environment-slider" type="range" min="1" max="5" step="any" value="1" aria-valuetext="Blockout (1 / 5)">
+      </div>
+    </div>
+  </section>
+  <section id="negative-edge-elevator" class="self-media project-breakdown planning-phase" aria-labelledby="elevator-title">
+    <div class="eyebrow">Process</div>
+    <h2 id="elevator-title">Building the Elevator</h2>
+    <p class="planning-copy">The elevator concept came to me while I was playing my favourite MMORPG, Final Fantasy XIV. It sparked an idea for linking the Canyon to the existing floating area. I gathered visual references and collaborated with the game designer to refine the concept. I then blocked out the elevator with primitive shapes using precise dimensions before handing its production over to the 3D art team.</p>
+    <div class="self-gallery process-carousel" data-process-carousel>
+      <figure><div class="process-image">
+        <img src="../assets/negative-edge-elevator/concept.png" data-carousel-image data-stage="Concept" alt="Elevator concept board combining geometric architecture references, Final Fantasy XIV screenshots and an early design" width="2048" height="702" loading="eager" decoding="async" draggable="false">
+        <img src="../assets/negative-edge-elevator/blockout.png" data-carousel-image data-stage="Blockout" alt="Elevator platform blockout using primitive shapes and marked gameplay dimensions" width="1280" height="847" loading="eager" decoding="async" draggable="false" hidden>
+        <img src="../assets/negative-edge-elevator/3d-build.png" data-carousel-image data-stage="3D build" alt="Constructed elevator platform with geometric edge details and a central column" width="768" height="385" loading="eager" decoding="async" draggable="false" hidden>
+      </div></figure>
+      <div class="carousel-controls" hidden>
+        <label for="elevator-slider">Drag to see the process from concept to 3D build</label>
+        <output for="elevator-slider">Concept (1 / 3)</output>
+        <input id="elevator-slider" type="range" min="1" max="3" step="any" value="1" aria-valuetext="Concept (1 / 3)">
+      </div>
+    </div>
+  </section>
+  <section id="negative-edge-boss-arena" class="self-media project-breakdown planning-phase" aria-labelledby="boss-arena-title">
+    <div class="eyebrow">Process</div>
+    <h2 id="boss-arena-title">Building the Boss Arena</h2>
+    <p class="planning-copy">While the art department handled set dressing for the Canyon and Elevator, I took responsibility for the boss arena. I reviewed the game designer's existing blockout and worked with them to adapt both the arena and the boss fight to the team's updated requirements. I developed the new visual direction in Maya, keeping the team involved throughout so I could incorporate feedback and adjust features as needed. Once the blockout was complete, I finished the area with textures, props, and interactive elements, creating the arena's current look, which received praise from all the playtesters and players we worked with.</p>
+    <div class="self-gallery process-carousel" data-process-carousel>
+      <figure><div class="process-image">
+        <img src="../assets/negative-edge-boss-arena/blockout_01.png" data-carousel-image data-stage="Blockout" alt="Early boss arena art pass with a central spherical boss and surrounding platforms" width="768" height="385" loading="eager" decoding="async" draggable="false">
+        <img src="../assets/negative-edge-boss-arena/blockout_00.png" data-carousel-image data-stage="Iteration 01" alt="Maya blockout of the circular boss arena with structural supports and organic forms" width="1536" height="732" loading="eager" decoding="async" draggable="false" hidden>
+        <img src="../assets/negative-edge-boss-arena/blockout_02.png" data-carousel-image data-stage="Iteration 02" alt="Boss encounter in the textured arena with red attack effects" width="768" height="434" loading="eager" decoding="async" draggable="false" hidden>
+        <img src="../assets/negative-edge-boss-arena/blockout_03.png" data-carousel-image data-stage="Final result" alt="Finished boss arena with a central spherical boss, red illuminated pillars and textured surfaces" width="1536" height="771" loading="eager" decoding="async" draggable="false" hidden>
+      </div></figure>
+      <div class="carousel-controls" hidden>
+        <label for="boss-arena-slider">Drag to see the process from blockout to final result</label>
+        <output for="boss-arena-slider">Blockout (1 / 4)</output>
+        <input id="boss-arena-slider" type="range" min="1" max="4" step="any" value="1" aria-valuetext="Blockout (1 / 4)">
+      </div>
+    </div>
+  </section>
+  <section id="negative-edge-fortress" class="self-media project-breakdown planning-phase" aria-labelledby="fortress-title">
+    <div class="eyebrow">Process</div>
+    <h2 id="fortress-title">Building the Fortress</h2>
+    <p class="planning-copy">Once the boss arena was complete, I enclosed it within a fortress designed to serve as a major landmark. Its imposing presence was intended to build anticipation and signal that a boss fight was approaching. I positioned the fortress strategically so the entire structure could be framed from any point in the floating level, giving the environment a more dramatic composition.</p>
+    <div class="self-gallery process-carousel" data-process-carousel>
+      <figure><div class="process-image">
+        <img src="../assets/negative-edge-fortress/fortress_01.png" data-carousel-image data-stage="Blockout" alt="Early fortress exterior with tall geometric supports enclosing the boss arena" width="1536" height="836" loading="eager" decoding="async" draggable="false">
+        <img src="../assets/negative-edge-fortress/fortress_02.png" data-carousel-image data-stage="Detailing" alt="Fortress facade with organic details and eye-like forms above the entrance" width="1536" height="776" loading="eager" decoding="async" draggable="false" hidden>
+        <img src="../assets/negative-edge-fortress/fortress_03.png" data-carousel-image data-stage="Lighting" alt="Fortress facade with red accent lighting and organic details" width="1536" height="836" loading="eager" decoding="async" draggable="false" hidden>
+        <img src="../assets/negative-edge-fortress/fortress_04.png" data-carousel-image data-stage="In-game view" alt="In-game view of the fortress from a platform in the floating level" width="1536" height="837" loading="eager" decoding="async" draggable="false" hidden>
+        <img src="../assets/negative-edge-fortress/fortress_05.png" data-carousel-image data-stage="Entrance" alt="Fortress entrance with lights, organic forms and red accents" width="768" height="383" loading="eager" decoding="async" draggable="false" hidden>
+        <img src="../assets/negative-edge-fortress/fortress_06.png" data-carousel-image data-stage="Overview" alt="Overview of the fortress and its approach through the floating environment" width="1536" height="772" loading="eager" decoding="async" draggable="false" hidden>
+        <img src="../assets/negative-edge-fortress/fortress_07.png" data-carousel-image data-stage="Final view" alt="View towards the fortress entrance from the surrounding floating platforms" width="1536" height="770" loading="eager" decoding="async" draggable="false" hidden>
+      </div></figure>
+      <div class="carousel-controls" hidden>
+        <label for="fortress-slider">Drag to see the process from blockout to final result</label>
+        <output for="fortress-slider">Blockout (1 / 7)</output>
+        <input id="fortress-slider" type="range" min="1" max="7" step="any" value="1" aria-valuetext="Blockout (1 / 7)">
+      </div>
+    </div>
+  </section>
+  <section id="negative-edge-enemy-placement" class="self-media project-breakdown planning-phase" aria-labelledby="enemy-placement-title">
+    <div class="eyebrow">Process</div>
+    <h2 id="enemy-placement-title">Enemy Placement and Balancing</h2>
+    <p class="planning-copy">After completing the environment, I collaborated with the design team to balance enemy placement, utility items, and health and shield stations. As the map layout evolved, we went through several rounds of iteration to find the right balance between fast-paced gameplay and difficulty.</p>
+    <div class="self-gallery process-carousel" data-process-carousel>
+      <figure><div class="process-image">
+        <img src="../assets/negative-edge-enemy-placement/placement_00.png" data-carousel-image data-stage="Overview" alt="Annotated canyon overview showing enemy positions, a death fall and traversal routes" width="1280" height="869" loading="eager" decoding="async" draggable="false">
+        <img src="../assets/negative-edge-enemy-placement/placement_01.png" data-carousel-image data-stage="Melee and ranged enemies" alt="Annotated positions for melee and ranged enemies on separate canyon platforms" width="1024" height="801" loading="eager" decoding="async" draggable="false" hidden>
+        <img src="../assets/negative-edge-enemy-placement/placement_02.png" data-carousel-image data-stage="Melee encounter" alt="Melee enemy placement across rock platforms in the canyon" width="1280" height="769" loading="eager" decoding="async" draggable="false" hidden>
+        <img src="../assets/negative-edge-enemy-placement/placement_03.png" data-carousel-image data-stage="Checkpoint placement" alt="Annotated health station and checkpoint positions in the level" width="1280" height="746" loading="eager" decoding="async" draggable="false" hidden>
+        <img src="../assets/negative-edge-enemy-placement/placement_04.png" data-carousel-image data-stage="Resource placement" alt="Resource and station placement along the player route" width="1591" height="593" loading="eager" decoding="async" draggable="false" hidden>
+        <img src="../assets/negative-edge-enemy-placement/placement_05.png" data-carousel-image data-stage="Health and shield stations" alt="Annotated health and shield stations with utility items in the environment" width="2048" height="786" loading="eager" decoding="async" draggable="false" hidden>
+      </div></figure>
+      <div class="carousel-controls" hidden>
+        <label for="enemy-placement-slider">Drag to explore enemy placement and balancing</label>
+        <output for="enemy-placement-slider">Overview (1 / 6)</output>
+        <input id="enemy-placement-slider" type="range" min="1" max="6" step="any" value="1" aria-valuetext="Overview (1 / 6)">
+      </div>
+    </div>
+  </section>
+  <section id="negative-edge-final-thoughts" class="self-media project-breakdown planning-phase" aria-labelledby="final-thoughts-title">
+    <div class="eyebrow">Reflection</div>
+    <h2 id="final-thoughts-title">Final Thoughts</h2>
+    <p class="planning-copy">Negative Edge was a distinctive project to work on. I joined a project that was already in development and had to adapt to a unique art style that was far removed from my specialisation. I worked hard to match that visual direction while guiding the art department towards a cohesive result, ensuring that the new assets felt consistent with those already in the game.</p>
   </section>
 </main>
 </body>

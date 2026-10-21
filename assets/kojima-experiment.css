@@ -175,6 +175,7 @@ nav > a:hover::after,nav > a:focus-visible::after,.nav-category:hover::before,.n
   transition:background .2s ease,color .2s ease,transform .2s ease;
 }
 .project .visit:hover,.project .visit:focus-visible{background:var(--accent);color:#fff;transform:translateY(-2px);outline:none}
+.project .project-actions .visit:disabled{background:#f4f4f2;color:#0b0b0c;opacity:.65;cursor:default;transform:none;transition:none}
 
 /* Tools sit in three clearly named columns, followed by a dark contact panel. */
 #tools{padding:128px 0 140px;border:0;background:#e6e7e7;color:#111214}
