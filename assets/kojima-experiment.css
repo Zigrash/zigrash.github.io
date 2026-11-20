@@ -194,21 +194,20 @@ nav > a:hover::after,nav > a:focus-visible::after,.nav-category:hover::before,.n
 .tool-icon::after{background:#111214;border-color:#555;color:#fff}
 
 #contact{padding:150px 0 165px;border-top:1px solid #444;background:#050506;color:#f4f4f2}
-#contact .wrap{max-width:none;padding:0 clamp(24px,7vw,112px);gap:clamp(30px,6vw,100px)}
+#contact .wrap{max-width:none;padding:0 clamp(24px,7vw,112px);display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:28px clamp(22px,2.2vw,38px)}
 .contact h2{
   font-family:'Chakra Petch','Montserrat',sans-serif;
   font-size:clamp(30px,3.3vw,49px);font-weight:700;
-  line-height:1.02;letter-spacing:.02em;
+  line-height:1.02;letter-spacing:.02em;flex:0 1 auto;min-width:0;
 }
 .contact .contact-line + .contact-line{margin-top:18px;color:#9c9d9f}
-.contact-links{grid-template-columns:repeat(2,112px);gap:12px}
-.contact-links a.tool-icon{background:#151719;border:1px solid #4d4f51;clip-path:polygon(0 0,100% 0,calc(100% - 13px) 100%,0 100%)}
-.contact-links a.tool-icon:hover,.contact-links a.tool-icon:focus-visible{background:#242629;border-color:var(--accent)}
+.contact-links{grid-template-columns:repeat(4,112px);gap:10px;flex:none}
+.contact-links a.tool-icon{padding:0;background:#111214;border:1px solid #36383b;clip-path:none;transition:background .2s ease,border-color .2s ease,transform .2s ease}
+.contact-links a.tool-icon:hover,.contact-links a.tool-icon:focus-visible{background:#202326;border-color:var(--accent);transform:translateY(-4px)}
 #trail-toggle{background:rgba(12,13,14,.93);border-color:#777;font-family:'Chakra Petch','IBM Plex Mono',monospace;font-weight:700}
 
-@media(max-width:1050px){
-  #contact .wrap{grid-template-columns:1fr}
-}
+@media(max-width:520px){.contact-links{width:100%;grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:1050px){.contact h2 .contact-line{white-space:normal}}
 @media(max-width:1200px){
   .project{display:flex;flex-direction:column;aspect-ratio:auto;min-height:0;contain-intrinsic-size:auto 760px}
   .project .viewport,#vp-abyssos{width:100%;height:auto;min-height:0;aspect-ratio:16/9}
@@ -264,7 +263,7 @@ nav > a:hover::after,nav > a:focus-visible::after,.nav-category:hover::before,.n
   .project .visit,.project .project-actions .visit{font-size:11px;min-height:40px;padding:10px 20px 10px 14px}
   #tools{padding:96px 0 105px}
   .tool-group .tools{grid-template-columns:repeat(2,minmax(0,1fr))}
-  #contact .wrap{gap:42px}
+  #contact .wrap{gap:20px}
 }
 @media(max-width:720px){
   /* These covers already match the banner ratio; show the artwork itself edge to edge. */
